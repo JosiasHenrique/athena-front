@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+  --primary-color: #FBF4F4;
+  --secondary-color: #E8A2A2;
+  --tertiary-color: #F2B0B5;   
+  --quaternary-color: #F7C4C3;  
+  --quinary-color: #D4BCBC;    
+  --font-family: 'Roboto', sans-serif;
+}
+
