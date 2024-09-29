@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 
 
 :root {
@@ -9,6 +12,15 @@
   --tertiary-color: #F2B0B5;   
   --quaternary-color: #F7C4C3;  
   --quinary-color: #D4BCBC;    
-  --font-family: 'Roboto', sans-serif;
+  --font-family: 'Inter', sans-serif;
 }
+
+body {
+  font-family: var(--font-family);
+}
+
+.bg-athena {
+  background-color: var(--secondary-color);
+}
+
 

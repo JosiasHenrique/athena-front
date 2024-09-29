@@ -1,23 +1,15 @@
 import React from 'react';
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+
 
 const Dashboard = () => {
-  return (
-    <div>
-      <h1 className="text-2xl font-bold">Painel de Controle</h1>
-      <nav>
-        <ul>
-          <li>
-            <Link to="vendas">Vendas</Link>
-          </li>
-          <li>
-            <Link to="produtos">Produtos</Link>
-          </li>
-        </ul>
-      </nav>
 
+  return (
+    <main>
+      <Navbar />
       <Outlet />
-    </div>
+    </main>
   );
 };
 
