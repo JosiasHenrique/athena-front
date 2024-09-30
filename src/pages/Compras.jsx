@@ -1,7 +1,9 @@
 import React from 'react';
 
 const Compras = () => {
-  return <h1>Página de Produtos</h1>;
+  return (
+    <h1>Página de Vendas</h1>
+  )
 };
 
 export default Compras;

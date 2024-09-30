@@ -4,8 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 :root {
   --primary-color: #FBF4F4;
   --secondary-color: #E8A2A2;
@@ -22,5 +20,101 @@ body {
 .bg-athena {
   background-color: var(--secondary-color);
 }
+
+.text-athena {
+  color: var(--quaternary-color);
+}
+
+.navbar-dash {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 30px;
+}
+
+.navbar-dash ul {
+  display: flex;
+}
+
+.navbar-dash ul li {
+  margin: 0 30px;
+  font-weight: 500;
+  padding: 7px 15px;
+  border-radius: 5px;
+  transition: transform 0.3s ease;
+}
+
+.navbar-dash ul li:hover {
+  color: var(--primary-color);
+  transform: scale(1.05);
+}
+
+.selected button, .selected a {
+  color: black;
+  font-weight: 500;
+  padding: 7px 15px;  
+  background-color: var(--primary-color);
+  border-radius: 5px;
+}
+
+.nav-utils button{
+  margin: 0 10px;
+}
+
+.icon-nav {
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.icon-nav:hover {
+  color: var(--primary-color);
+  transform: scale(1.50);
+}
+
+.btn-action:hover {
+  color: var(--secondary-color);
+}
+
+.cadastro-titulo {
+  background-color: var(--quaternary-color);
+  padding: 10px;
+}
+
+.container-tabela {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+table {
+  margin-top: 30px;
+  width: 90%;
+}
+
+.container-login, .container-cadastro {
+  background: linear-gradient(135deg, var(--quinary-color), var(--quaternary-color), var(--secondary-color));
+}
+
+.container-login button, .container-cadastro button {
+  background-color: var(--quaternary-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.container-login button:hover, .container-cadastro button:hover {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+}
+
+input {
+  border: 2px solid var(--quinary-color);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus {
+  border-color: var(--quaternary-color) !important;
+  box-shadow: 0 0 0 2px var(--quaternary-color) !important;
+}
+
+
+
 
 
