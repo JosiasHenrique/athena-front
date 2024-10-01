@@ -1,18 +1,26 @@
 import '../styles/dashboard.css';
-import { EyeIcon, PencilIcon , TrashIcon } from '@heroicons/react/24/solid';
-
-
-const data = [
-    { id: 1, nome: 'Josias', telefone: '(11) 99999-9999', email: 'josias@example.com' },
-    { id: 2, nome: 'Henrique', telefone: '(11) 99999-9999', email: 'josias@example.com' },
-    { id: 3, nome: 'Leonel', telefone: '(11) 99999-9999', email: 'josias@example.com' },
-
-];
+import { EyeIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/solid';
+import { useState, useEffect } from 'react';
+import api from '../api';
 
 const TabelaClientes = () => {
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        const fetchClientes = async () => {
+            try {
+                const response = await api.get('/clientes'); 
+                setData(response.data); 
+            } catch (error) {
+                console.error("Erro ao buscar os clientes:", error);
+            }
+        };
+
+        fetchClientes();
+    }, []);
+
     return (
         <div className="container-tabela">
-
             <table className="table-auto border-separate border-spacing-y-3">
                 <thead>
                     <tr>
@@ -36,7 +44,7 @@ const TabelaClientes = () => {
                                         <EyeIcon className="h-5 w-5" />
                                     </button>
                                     <button className="btn-action text-gray-400 mr-2">
-                                        <PencilIcon  className="h-5 w-5" />
+                                        <PencilIcon className="h-5 w-5" />
                                     </button>
                                     <button className="btn-action text-gray-400">
                                         <TrashIcon className="h-5 w-5" />
@@ -50,6 +58,5 @@ const TabelaClientes = () => {
         </div>
     );
 };
-
 
 export default TabelaClientes;

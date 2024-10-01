@@ -1,15 +1,23 @@
+import { useEffect, useState } from 'react';
 import '../styles/dashboard.css';
 import { EyeIcon, PencilIcon , TrashIcon } from '@heroicons/react/24/solid';
-
-
-const data = [
-    { id: 1, nome: 'Josias', contato: '(11) 99999-9999', comissao: '20%' },
-    { id: 2, nome: 'Henrique', contato: '(11) 99999-9999', comissao: '20%' },
-    { id: 3, nome: 'Leonel', contato: '(11) 99999-9999', comissao: '30%' },
-
-];
+import api from '../api';
 
 const TabelaRevendedores = () => {
+        const [data, setData] = useState([]);
+    
+        useEffect(() => {
+            const fetchRevendedores = async () => {
+                try {
+                    const response = await api.get('/revendedores'); 
+                    setData(response.data); 
+                } catch (error) {
+                    console.error("Erro ao buscar revendedores:", error);
+                }
+            };
+            fetchRevendedores();
+        }, []);
+
     return (
         <div className="container-tabela">
 
