@@ -8,12 +8,17 @@ import CadastroClientes from "./pages/CadastroClientes";
 import CadastroProdutos from "./pages/CadastroProdutos";
 import CadastroRevendedores from "./pages/CadastroRevendedores";
 import CadastroLogin from "./pages/Cadastro";
+import ProtectedRoute from "./ProtectedRout";
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Dashboard />}>
+      <Route path="/" element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }>
           <Route path="vendas" element={<Vendas />} />
           <Route path="compras" element={<Compras />} />
           <Route path="cadastro-revendedores" element={<CadastroRevendedores />} />
