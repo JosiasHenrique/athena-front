@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import '../styles/dashboard.css';
 import { EyeIcon, PencilIcon , TrashIcon } from '@heroicons/react/24/solid';
-import api from '../api';
+import api from '../api/api';
 
 const TabelaRevendedores = () => {
         const [data, setData] = useState([]);

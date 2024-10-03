@@ -1,26 +1,54 @@
 import '../styles/dashboard.css';
-import { EyeIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/solid';
-import { useState, useEffect } from 'react';
-import api from '../api';
+import { EyeIcon, PencilIcon, TrashIcon, PlusIcon } from '@heroicons/react/24/solid';
+import { useEffect, useState } from 'react';
+import { fetchClientes, deleteCliente } from '../api/apiCliente';
+import ModalCliente from './ModalCliente';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; 
+import useModalCliente from '../hooks/useModalCliente';
 
 const TabelaClientes = () => {
     const [data, setData] = useState([]);
+    
+    const loadClientes = async () => {
+        const clientes = await fetchClientes();
+        setData(clientes);
+    };
+
+    const handleDelete = async (id) => {
+        if (window.confirm("Tem certeza que deseja excluir este cliente?")) {
+            try {
+                await deleteCliente(id);
+                setData((prevData) => prevData.filter((item) => item.id !== id));
+                toast.success("Cliente excluído com sucesso!");
+            } catch (error) {
+                console.error("Erro ao excluir o cliente:", error);
+                toast.error("Erro ao excluir o cliente."); 
+            }
+        }
+    };
+
+    const {
+        isModalOpen,
+        setModalOpen,
+        selectedCliente,
+        isEditing,
+        loading,
+        handleModalOpen,
+        handleEditModalOpen,
+        handleSave,
+    } = useModalCliente(loadClientes);
 
     useEffect(() => {
-        const fetchClientes = async () => {
-            try {
-                const response = await api.get('/clientes'); 
-                setData(response.data); 
-            } catch (error) {
-                console.error("Erro ao buscar os clientes:", error);
-            }
-        };
-
-        fetchClientes();
+        loadClientes();
     }, []);
 
     return (
         <div className="container-tabela">
+            <ToastContainer />
+            <button onClick={handleModalOpen} className="bg-pink-500 text-white p-2 rounded mb-4">
+                <PlusIcon className="h-5 w-5 inline" /> Adicionar Cliente
+            </button>
             <table className="table-auto border-separate border-spacing-y-3">
                 <thead>
                     <tr>
@@ -43,10 +71,13 @@ const TabelaClientes = () => {
                                     <button className="btn-action text-gray-400 mr-2">
                                         <EyeIcon className="h-5 w-5" />
                                     </button>
-                                    <button className="btn-action text-gray-400 mr-2">
+                                    <button 
+                                        className="btn-action text-gray-400 mr-2" 
+                                        onClick={() => handleEditModalOpen(item)}
+                                    >
                                         <PencilIcon className="h-5 w-5" />
                                     </button>
-                                    <button className="btn-action text-gray-400">
+                                    <button  onClick={() => handleDelete(item.id)} className="btn-action text-gray-400">
                                         <TrashIcon className="h-5 w-5" />
                                     </button>
                                 </div>
@@ -55,6 +86,14 @@ const TabelaClientes = () => {
                     ))}
                 </tbody>
             </table>
+            <ModalCliente 
+                isOpen={isModalOpen} 
+                onClose={() => setModalOpen(false)} 
+                cliente={selectedCliente} 
+                isEditing={isEditing} 
+                onSave={handleSave}
+                loading={loading} 
+            />
         </div>
     );
 };

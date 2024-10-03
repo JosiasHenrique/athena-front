@@ -8,7 +8,7 @@ import CadastroClientes from "./pages/CadastroClientes";
 import CadastroProdutos from "./pages/CadastroProdutos";
 import CadastroRevendedores from "./pages/CadastroRevendedores";
 import CadastroLogin from "./pages/Cadastro";
-import ProtectedRoute from "./ProtectedRout";
+import ProtectedRoute from "./ProtectedRoute";
 
 const App = () => {
   return (

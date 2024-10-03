@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import api from '../api';
+import api from '../api/api';
 import '../styles/dashboard.css';
 import { EyeIcon, PencilIcon , TrashIcon } from '@heroicons/react/24/solid';
 

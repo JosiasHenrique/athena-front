@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/img/LOGO.svg";
-import api from "../api";
+import api from "../api/api";
 import ClipLoader from "react-spinners/ClipLoader"; 
 import { toast, ToastContainer } from "react-toastify"; 
 import 'react-toastify/dist/ReactToastify.css';
