@@ -81,6 +81,7 @@ body {
 
 .container-tabela {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -113,6 +114,23 @@ input:focus {
   border-color: var(--quaternary-color) !important;
   box-shadow: 0 0 0 2px var(--quaternary-color) !important;
 }
+
+.utils-tabela {
+  display: flex;
+  width: 90%;
+  margin-top: 20px;
+}
+
+.utils-tabela input {
+  width: 80%;
+}
+
+.utils-tabela button {
+  width: 20%;
+  margin-right: 20px;
+}
+
+
 
 
 
