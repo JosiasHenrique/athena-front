@@ -1,26 +1,27 @@
+import { XMarkIcon } from '@heroicons/react/24/solid';
 import React, { useEffect, useState } from 'react';
 
-const ModalCliente = ({ isOpen, onClose, cliente, isEditing, onSave, loading }) => {
+const ModalRevendedor = ({ isOpen, onClose, revendedor, isEditing, onSave, loading }) => {
     const [nome, setNome] = useState('');
-    const [telefone, setTelefone] = useState('');
-    const [email, setEmail] = useState('');
+    const [contato, setContato] = useState('');
+    const [comissao, setComissao] = useState('');
 
     useEffect(() => {
         if (isOpen) {
             setNome('');
-            setTelefone('');
-            setEmail('');
+            setContato('');
+            setComissao('');
 
-            if (isEditing && cliente) {
-                setNome(cliente.nome);
-                setTelefone(cliente.telefone);
-                setEmail(cliente.email);
+            if (isEditing && revendedor) {
+                setNome(revendedor.nome);
+                setContato(revendedor.contato);
+                setComissao(revendedor.comissao);
             }
         }
-    }, [cliente, isEditing, isOpen]);
+    }, [revendedor, isEditing, isOpen]);
 
     const handleSave = () => {
-        onSave(nome, telefone, email); 
+        onSave(nome, contato, comissao);
     };
 
     return (
@@ -29,38 +30,38 @@ const ModalCliente = ({ isOpen, onClose, cliente, isEditing, onSave, loading }) 
                 <div className="bg-white rounded-lg p-6 w-11/12 md:w-1/3">
                     <div className="flex justify-between items-center mb-4">
                         <h2 className="text-lg font-semibold bg-pink-500 text-white p-2 rounded">
-                            Cadastro/Edição Cliente
+                            Cadastro/Edição Revendedor
                         </h2>
                         <button onClick={onClose} className="bg-pink-500 text-white rounded-full p-2">
-                            &times;
+                            <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                         </button>
                     </div>
                     <div className="mb-4">
                         <label className="block text-gray-700">Nome</label>
-                        <input 
-                            type="text" 
-                            value={nome} 
+                        <input
+                            type="text"
+                            value={nome}
                             onChange={(e) => setNome(e.target.value)}
                             className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
                             required
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="block text-gray-700">Telefone</label>
-                        <input 
-                            type="text" 
-                            value={telefone} 
-                            onChange={(e) => setTelefone(e.target.value)}
+                        <label className="block text-gray-700">Contato</label>
+                        <input
+                            type="text"
+                            value={contato}
+                            onChange={(e) => setContato(e.target.value)}
                             className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
                             required
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="block text-gray-700">Email</label>
-                        <input 
-                            type="email" 
-                            value={email} 
-                            onChange={(e) => setEmail(e.target.value)}
+                        <label className="block text-gray-700">Comissão</label>
+                        <input
+                            type="text"
+                            value={comissao}
+                            onChange={(e) => setComissao(e.target.value)}
                             className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
                             required
                         />
@@ -76,4 +77,4 @@ const ModalCliente = ({ isOpen, onClose, cliente, isEditing, onSave, loading }) 
     );
 };
 
-export default ModalCliente;
+export default ModalRevendedor;

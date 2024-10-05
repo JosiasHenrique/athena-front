@@ -1,47 +1,52 @@
-import '../styles/dashboard.css';
 import { EyeIcon, PencilIcon, TrashIcon, PlusIcon } from '@heroicons/react/24/solid';
 import { useEffect, useState } from 'react';
-import { fetchClientes, deleteCliente } from '../api/apiCliente';
-import ModalCliente from './ModalCliente';
+import { fetchProdutos, deleteProduto } from '../../api/apiProduto';
+import ModalProduto from './ModalProduto';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import useCliente from '../hooks/useCliente';
+import useProdutoForm from '../../hooks/useProdutoForm';
+import ModalDelete from '../ModalDelete';
 
-const TabelaClientes = () => {
+const TabelaProdutos = () => {
     const [data, setData] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedProdutoId, setSelectedProdutoId] = useState(null);
 
-    const loadClientes = async () => {
-        const clientes = await fetchClientes();
-        setData(clientes);
+    const loadProdutos = async () => {
+        const produtos = await fetchProdutos();
+        setData(produtos);
     };
 
-    const handleDelete = async (id) => {
-        if (window.confirm("Tem certeza que deseja excluir este cliente?")) {
+    const confirmDelete = async () => {
+        if (selectedProdutoId) {
             try {
-                await deleteCliente(id);
-                setData((prevData) => prevData.filter((item) => item.id !== id));
-                toast.success("Cliente excluído com sucesso!");
+                await deleteProduto(selectedProdutoId);
+                setData((prevData) => prevData.filter((item) => item.id !== selectedProdutoId));
+                toast.success("Produto excluído com sucesso!");
             } catch (error) {
-                console.error("Erro ao excluir o cliente:", error);
-                toast.error("Erro ao excluir o cliente.");
+                console.error("Erro ao excluir o Produto:", error);
+                toast.error("Erro ao excluir o Produto.");
+            } finally {
+                setIsModalOpen(false);
+                setSelectedProdutoId(null);
             }
         }
     };
 
     const {
-        isModalOpen,
+        isModalOpen: isEditModalOpen,
         setModalOpen,
-        selectedCliente,
+        selectedProduto,
         isEditing,
         loading,
         handleModalOpen,
         handleEditModalOpen,
         handleSave,
-    } = useCliente(loadClientes);
+    } = useProdutoForm(loadProdutos);
 
     useEffect(() => {
-        loadClientes();
+        loadProdutos();
     }, []);
 
     const filteredData = data.filter((item) =>
@@ -53,28 +58,29 @@ const TabelaClientes = () => {
             <ToastContainer />
             <div className="utils-tabela">
                 <button onClick={handleModalOpen} className="bg-athena text-white p-2 rounded mb-4">
-                    <PlusIcon className="h-5 w-5 inline" /> Novo Cliente
+                    <PlusIcon className="h-5 w-5 inline" /> Novo Produto
                 </button>
-                
+
                 <input
                     type="text"
-                    placeholder="Pesquisar cliente por nome..."
+                    placeholder="Pesquisar produto por nome..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="input-search p-2 border rounded mb-4"
                 />
-
             </div>
-
             {filteredData.length === 0 ? (
-                <p className="text-gray-500 text-center">Nenhum cliente encontrado.</p>
+                <p className="text-gray-500 text-center">Nenhum produto encontrado.</p>
             ) : (
                 <table className="table-auto border-separate border-spacing-y-3">
                     <thead>
                         <tr>
                             <th className="px-2 py-2 text-left text-xs font-medium text-black uppercase tracking-wider">Nome</th>
-                            <th className="px-2 py-2 text-left text-xs font-medium text-black uppercase tracking-wider">Telefone</th>
-                            <th className="px-2 py-2 text-left text-xs font-medium text-black uppercase tracking-wider">Email</th>
+                            <th className="px-2 py-2 text-left text-xs font-medium text-black uppercase tracking-wider">Descrição</th>
+                            <th className="px-2 py-2 text-left text-xs font-medium text-black uppercase tracking-wider">Categoria</th>
+                            <th className="px-2 py-2 text-left text-xs font-medium text-black uppercase tracking-wider">Tamanho</th>
+                            <th className="px-2 py-2 text-left text-xs font-medium text-black uppercase tracking-wider">Estoque Atual</th>
+                            <th className="px-2 py-2 text-left text-xs font-medium text-black uppercase tracking-wider">Id</th>
                             <th className="px-2 py-2 text-center text-xs font-medium text-black uppercase tracking-wider">Ações</th>
                         </tr>
                     </thead>
@@ -82,8 +88,11 @@ const TabelaClientes = () => {
                         {filteredData.map((item) => (
                             <tr key={item.id} className="bg-white border border-gray-300 rounded-lg shadow-sm">
                                 <td className="px-2 py-2 text-left text-sm text-gray-900">{item.nome}</td>
-                                <td className="px-2 py-2 text-left text-sm text-gray-500">{item.telefone}</td>
-                                <td className="px-2 py-2 text-left text-sm text-gray-500">{item.email}</td>
+                                <td className="px-2 py-2 text-left text-sm text-gray-500">{item.descricao}</td>
+                                <td className="px-2 py-2 text-left text-sm text-gray-500">{item.categoria}</td>
+                                <td className="px-2 py-2 text-left text-sm text-gray-500">{item.tamanho}</td>
+                                <td className="px-2 py-2 text-left text-sm text-gray-500">{item.estoque_atual}</td>
+                                <td className="px-2 py-2 text-left text-sm text-gray-500">{item.id}</td>
                                 <td className="px-2 py-2 text-center text-sm font-medium">
                                     <div className="flex justify-center">
                                         <button className="btn-action text-gray-400 mr-2 px-2 py-2">
@@ -95,7 +104,10 @@ const TabelaClientes = () => {
                                         >
                                             <PencilIcon className="h-5 w-5" />
                                         </button>
-                                        <button onClick={() => handleDelete(item.id)} className="btn-action text-gray-400 px-2 py-2">
+                                        <button onClick={() => {
+                                            setSelectedProdutoId(item.id);
+                                            setIsModalOpen(true);
+                                        }} F className="btn-action text-gray-400 px-2 py-2">
                                             <TrashIcon className="h-5 w-5" />
                                         </button>
                                     </div>
@@ -105,17 +117,22 @@ const TabelaClientes = () => {
                     </tbody>
                 </table>
             )}
-
-            <ModalCliente
-                isOpen={isModalOpen}
+            <ModalProduto
+                isOpen={isEditModalOpen}
                 onClose={() => setModalOpen(false)}
-                cliente={selectedCliente}
+                produto={selectedProduto}
                 isEditing={isEditing}
                 onSave={handleSave}
                 loading={loading}
+            />
+            <ModalDelete
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onConfirm={confirmDelete}
+                item="produto"
             />
         </div>
     );
 };
 
-export default TabelaClientes;
+export default TabelaProdutos;

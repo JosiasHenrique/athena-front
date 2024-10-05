@@ -1,3 +1,4 @@
+import { XMarkIcon } from '@heroicons/react/24/solid';
 import React, { useEffect, useState } from 'react';
 
 const ModalProduto = ({ isOpen, onClose, produto, isEditing, onSave, loading }) => {
@@ -13,7 +14,7 @@ const ModalProduto = ({ isOpen, onClose, produto, isEditing, onSave, loading }) 
             setDescricao('');
             setCategoria('');
             setTamanho('');
-            setEstoqueAtual(''); 
+            setEstoqueAtual('');
 
             if (isEditing && produto) {
                 setNome(produto.nome);
@@ -26,7 +27,7 @@ const ModalProduto = ({ isOpen, onClose, produto, isEditing, onSave, loading }) 
     }, [produto, isEditing, isOpen]);
 
     const handleSave = () => {
-        onSave(nome, descricao, categoria, tamanho, estoqueAtual ); 
+        onSave(nome, descricao, categoria, tamanho, estoqueAtual);
     };
 
     return (
@@ -38,14 +39,14 @@ const ModalProduto = ({ isOpen, onClose, produto, isEditing, onSave, loading }) 
                             Cadastro/Edição Produto
                         </h2>
                         <button onClick={onClose} className="bg-pink-500 text-white rounded-full p-2">
-                            &times;
+                            <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                         </button>
                     </div>
                     <div className="mb-4">
                         <label className="block text-gray-700">Nome</label>
-                        <input 
-                            type="text" 
-                            value={nome} 
+                        <input
+                            type="text"
+                            value={nome}
                             onChange={(e) => setNome(e.target.value)}
                             className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
                             required
@@ -62,9 +63,9 @@ const ModalProduto = ({ isOpen, onClose, produto, isEditing, onSave, loading }) 
                     </div>
                     <div className="mb-4">
                         <label className="block text-gray-700">Categoria</label>
-                        <input 
-                            type="text" 
-                            value={categoria} 
+                        <input
+                            type="text"
+                            value={categoria}
                             onChange={(e) => setCategoria(e.target.value)}
                             className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
                             required
@@ -73,9 +74,9 @@ const ModalProduto = ({ isOpen, onClose, produto, isEditing, onSave, loading }) 
                     <div className="flex mb-4 space-x-2">
                         <div className="flex-1">
                             <label className="block text-gray-700">Tamanho</label>
-                            <input 
-                                type="text" 
-                                value={tamanho} 
+                            <input
+                                type="text"
+                                value={tamanho}
                                 onChange={(e) => setTamanho(e.target.value)}
                                 className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
                                 required
@@ -83,9 +84,9 @@ const ModalProduto = ({ isOpen, onClose, produto, isEditing, onSave, loading }) 
                         </div>
                         <div className="flex-1">
                             <label className="block text-gray-700">Estoque Atual</label>
-                            <input 
-                                type="number" 
-                                value={estoqueAtual} 
+                            <input
+                                type="number"
+                                value={estoqueAtual}
                                 onChange={(e) => setEstoqueAtual(e.target.value)}
                                 className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
                                 required

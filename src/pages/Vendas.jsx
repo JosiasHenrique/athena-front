@@ -1,7 +1,12 @@
-import React from 'react';
+import TabelaVendas from "../components/Venda/TabelaVendas";
 
 const Vendas = () => {
-  return <h1>Página de Vendas</h1>;
+  return (
+    <div>
+        <h2 className="cadastro-titulo">Vendas</h2>
+        <TabelaVendas />
+    </div>
+  )
 };
 
 export default Vendas;

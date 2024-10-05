@@ -58,13 +58,13 @@ const Navbar = () => {
                     {menuAberto && (
                         <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
                             <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                                <Link to="/cadastro-clientes" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                                <Link to="/clientes" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
                                     Cadastro de Clientes
                                 </Link>
-                                <Link to="/cadastro-produtos" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                                <Link to="/produtos" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
                                     Cadastro de Produtos
                                 </Link>
-                                <Link to="/cadastro-revendedores" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                                <Link to="/revendedores" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
                                     Cadastro de Revendedores
                                 </Link>
                             </div>

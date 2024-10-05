@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { addProduto, updateProduto } from '../api/apiProduto';
 import { toast } from 'react-toastify';
 
-const useProduto = (refreshProdutos) => {
+const useProdutoForm = (refreshProdutos) => {
     const [isModalOpen, setModalOpen] = useState(false);
     const [selectedProduto, setSelectedProduto] = useState(null);
     const [isEditing, setEditing] = useState(false);
@@ -58,4 +58,4 @@ const useProduto = (refreshProdutos) => {
     };
 };
 
-export default useProduto;
+export default useProdutoForm;

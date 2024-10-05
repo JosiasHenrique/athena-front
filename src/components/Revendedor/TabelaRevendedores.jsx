@@ -1,12 +1,11 @@
-import '../styles/dashboard.css';
 import { EyeIcon, PencilIcon, TrashIcon, PlusIcon } from '@heroicons/react/24/solid';
 import { useEffect, useState } from 'react';
-import { fetchRevendedores, deleteRevendedor } from '../api/apiRevendedor';
+import { fetchRevendedores, deleteRevendedor } from '../../api/apiRevendedor';
 import ModalRevendedor from './ModalRevendedor';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; 
-import useRevendedor from '../hooks/useRevendedor';
-import ModalDelete from './ModalDelete';
+import useRevendedorForm from '../../hooks/useRevendedorForm';
+import ModalDelete from '../ModalDelete';
 
 const TabelaRevendedores = () => {
     const [data, setData] = useState([]);
@@ -46,7 +45,7 @@ const TabelaRevendedores = () => {
         handleModalOpen,
         handleEditModalOpen,
         handleSave,
-    } = useRevendedor(loadRevendedores);
+    } = useRevendedorForm(loadRevendedores);
 
     useEffect(() => {
         loadRevendedores();
@@ -81,6 +80,7 @@ const TabelaRevendedores = () => {
                         <th className="px-2 py-2 text-left text-xs font-medium text-black uppercase tracking-wider">Nome</th>
                         <th className="px-2 py-2 text-left text-xs font-medium text-black uppercase tracking-wider">Contato</th>
                         <th className="px-2 py-2 text-left text-xs font-medium text-black uppercase tracking-wider">Comissão</th>
+                        <th className="px-2 py-2 text-left text-xs font-medium text-black uppercase tracking-wider">Id</th>
                         <th className="px-2 py-2 text-center text-xs font-medium text-black uppercase tracking-wider">Ações</th>
                     </tr>
                 </thead>
@@ -90,6 +90,7 @@ const TabelaRevendedores = () => {
                             <td className="px-2 py-2 text-left text-sm text-gray-900">{item.nome}</td>
                             <td className="px-2 py-2 text-left text-sm text-gray-500">{item.contato}</td>
                             <td className="px-2 py-2 text-left text-sm text-gray-500">{item.comissao}</td>
+                            <td className="px-2 py-2 text-left text-sm text-gray-500">{item.id}</td>
                             <td className="px-2 py-2 text-center text-sm font-medium">
                                 <div className="flex justify-center">
                                     <button className="btn-action text-gray-400 mr-2 px-2 py-2">

@@ -4,11 +4,12 @@ import { BrowserRouter as Router, Routes, Route, BrowserRouter } from 'react-rou
 import Vendas from "./pages/Vendas";
 import Compras from "./pages/Compras";
 import Relatorios from "./pages/Relatorios";
-import CadastroClientes from "./pages/CadastroClientes";
-import CadastroProdutos from "./pages/CadastroProdutos";
-import CadastroRevendedores from "./pages/CadastroRevendedores";
-import CadastroLogin from "./pages/Cadastro";
+import CadastroLogin from "./pages/CadastroLogin";
 import ProtectedRoute from "./ProtectedRoute";
+import Revendedores from "./pages/Revendedores";
+import Produtos from "./pages/Produtos";
+import Clientes from "./pages/Clientes";
+
 
 const App = () => {
   return (
@@ -21,9 +22,9 @@ const App = () => {
         }>
           <Route path="vendas" element={<Vendas />} />
           <Route path="compras" element={<Compras />} />
-          <Route path="cadastro-revendedores" element={<CadastroRevendedores />} />
-          <Route path="cadastro-produtos" element={<CadastroProdutos />} />
-          <Route path="cadastro-clientes" element={<CadastroClientes />} />
+          <Route path="revendedores" element={<Revendedores />} />
+          <Route path="produtos" element={<Produtos />} />
+          <Route path="clientes" element={<Clientes />} />
           <Route path="relatorios" element={<Relatorios />} />
         </Route>
         <Route path="/login" element={<Login />} />

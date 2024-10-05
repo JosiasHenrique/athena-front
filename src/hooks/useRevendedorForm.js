@@ -1,27 +1,27 @@
 import { useState } from 'react';
-import { addCliente, updateCliente } from '../api/apiCliente';
+import { addRevendedor, updateRevendedor } from '../api/apiRevendedor';
 import { toast } from 'react-toastify';
 
-const useCliente = (refreshClientes) => {
+const useRevendedorForm = (refreshRevendedores) => {
     const [isModalOpen, setModalOpen] = useState(false);
-    const [selectedCliente, setSelectedCliente] = useState(null);
+    const [selectedRevendedor, setSelectedRevendedor] = useState(null);
     const [isEditing, setEditing] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const handleModalOpen = () => {
-        setSelectedCliente(null);
+        setSelectedRevendedor(null);
         setEditing(false);
         setModalOpen(true);
     };
 
-    const handleEditModalOpen = (cliente) => {
-        setSelectedCliente(cliente);
+    const handleEditModalOpen = (revendedor) => {
+        setSelectedRevendedor(revendedor);
         setEditing(true);
         setModalOpen(true);
     };
 
-    const handleSave = async (nome, telefone, email) => {
-        if (!nome || !telefone || !email) {
+    const handleSave = async (nome, contato, comissao) => {
+        if (!nome || !contato || !comissao) {
             toast.error("Todos os campos são obrigatórios.");
             return;
         }
@@ -29,15 +29,15 @@ const useCliente = (refreshClientes) => {
         setLoading(true);
         try {
             if (isEditing) {
-                await updateCliente(selectedCliente.id, { nome, telefone, email });
-                toast.success('Cliente atualizado com sucesso!');
+                await updateRevendedor(selectedRevendedor.id, { nome, contato, comissao });
+                toast.success('Revendedor atualizado com sucesso!');
             } else {
-                await addCliente({ nome, telefone, email });
-                toast.success('Cliente adicionado com sucesso!');
+                await addRevendedor({ nome, contato, comissao });
+                toast.success('Revendedor adicionado com sucesso!');
             }
-            refreshClientes();
+            refreshRevendedores();
         } catch (error) {
-            toast.error("Erro ao salvar o cliente.");
+            toast.error("Erro ao salvar o revendedor.");
         } finally {
             setLoading(false);
             setModalOpen(false);
@@ -47,7 +47,7 @@ const useCliente = (refreshClientes) => {
     return {
         isModalOpen,
         setModalOpen,
-        selectedCliente,
+        selectedRevendedor,
         isEditing,
         loading,
         handleModalOpen,
@@ -56,4 +56,4 @@ const useCliente = (refreshClientes) => {
     };
 };
 
-export default useCliente;
+export default useRevendedorForm;
