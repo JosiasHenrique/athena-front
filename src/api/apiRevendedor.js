@@ -10,6 +10,16 @@ export const fetchRevendedores = async () => {
     }
 };
 
+export const fetchRevendedorById = async (id) => {
+    try {
+        const response = await api.get(`/revendedores/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error(`Erro ao buscar o revendedor com ID ${id}:`, error);
+        throw error;
+    }
+};
+
 export const addRevendedor = async (revendedor) => {
     try {
         await api.post('/revendedores', revendedor);

@@ -77,21 +77,21 @@ const TabelaRevendedores = () => {
             <table className="table-auto border-separate border-spacing-y-3">
                 <thead>
                     <tr>
-                        <th className="px-2 py-2 text-left text-xs font-medium text-black uppercase tracking-wider">Nome</th>
-                        <th className="px-2 py-2 text-left text-xs font-medium text-black uppercase tracking-wider">Contato</th>
-                        <th className="px-2 py-2 text-left text-xs font-medium text-black uppercase tracking-wider">Comissão</th>
-                        <th className="px-2 py-2 text-left text-xs font-medium text-black uppercase tracking-wider">Id</th>
-                        <th className="px-2 py-2 text-center text-xs font-medium text-black uppercase tracking-wider">Ações</th>
+                        <th className="p-2 text-left text-xs font-medium text-black uppercase tracking-wider">Nome</th>
+                        <th className="p-2 text-left text-xs font-medium text-black uppercase tracking-wider">Contato</th>
+                        <th className="p-2 text-left text-xs font-medium text-black uppercase tracking-wider">Comissão</th>
+                        <th className="p-2 text-left text-xs font-medium text-black uppercase tracking-wider">Id</th>
+                        <th className="p-2 text-center text-xs font-medium text-black uppercase tracking-wider">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
                     {filteredData.map((item) => (
                         <tr key={item.id} className="bg-white border border-gray-300 rounded-lg shadow-sm">
-                            <td className="px-2 py-2 text-left text-sm text-gray-900">{item.nome}</td>
-                            <td className="px-2 py-2 text-left text-sm text-gray-500">{item.contato}</td>
-                            <td className="px-2 py-2 text-left text-sm text-gray-500">{item.comissao}</td>
-                            <td className="px-2 py-2 text-left text-sm text-gray-500">{item.id}</td>
-                            <td className="px-2 py-2 text-center text-sm font-medium">
+                            <td className="p-2 text-left text-sm text-gray-900">{item.nome}</td>
+                            <td className="p-2 text-left text-sm text-gray-500">{item.contato}</td>
+                            <td className="p-2 text-left text-sm text-gray-500">{item.comissao}</td>
+                            <td className="p-2 text-left text-sm text-gray-500">{item.id}</td>
+                            <td className="p-2 text-center text-sm font-medium">
                                 <div className="flex justify-center">
                                     <button className="btn-action text-gray-400 mr-2 px-2 py-2">
                                         <EyeIcon className="h-5 w-5" />

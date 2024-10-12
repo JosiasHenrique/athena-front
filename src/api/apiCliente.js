@@ -10,6 +10,16 @@ export const fetchClientes = async () => {
     }
 };
 
+export const fetchClienteById = async (id) => {
+    try {
+        const response = await api.get(`/clientes/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error(`Erro ao buscar o cliente com ID ${id}:`, error);
+        throw error;
+    }
+};
+
 export const addCliente = async (cliente) => {
     try {
         await api.post('/clientes', cliente);

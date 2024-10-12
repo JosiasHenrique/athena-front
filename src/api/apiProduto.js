@@ -10,6 +10,17 @@ export const fetchProdutos = async () => {
     }
 };
 
+export const fetchProdutoById = async (id) => {
+    try {
+        const response = await api.get(`/produtos/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error(`Erro ao buscar o produto com ID ${id}:`, error);
+        throw error;
+    }
+};
+
+
 export const addProduto = async (produto) => {
     try {
         await api.post('/produtos', produto);

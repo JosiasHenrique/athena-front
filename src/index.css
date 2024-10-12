@@ -45,16 +45,11 @@ body {
 }
 
 .navbar-dash ul li:hover {
-  color: var(--primary-color);
   transform: scale(1.05);
 }
 
-.selected button, .selected a {
-  color: black;
-  font-weight: 500;
-  padding: 7px 15px;  
-  background-color: var(--primary-color);
-  border-radius: 5px;
+.nav-utils {
+  display: flex;
 }
 
 .nav-utils button{
@@ -63,6 +58,17 @@ body {
 
 .icon-nav {
   transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.op-selected {
+  background-color: var(--primary-color);
+  padding: 7px 15px;
+  border-radius: 3px;
+}
+
+.op-selected-dropdown {
+  background-color: var(--quinary-color);
+  color: black;
 }
 
 .icon-nav:hover {
@@ -105,7 +111,7 @@ table {
   color: var(--primary-color);
 }
 
-input {
+input, textarea {
   border: 2px solid var(--quinary-color);
   transition: border-color 0.2s, box-shadow 0.2s;
 }
@@ -130,6 +136,15 @@ input:focus {
   margin-right: 20px;
 }
 
+.cabecalho-modal {
+  background-color: var(--secondary-color);
+  padding: 10px;
+  border-radius: 7px 7px 0px 0px;
+}
+
+.content-modal {
+  padding: 15px;
+}
 
 
 

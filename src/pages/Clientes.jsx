@@ -1,6 +1,5 @@
 import TabelaClientes from "../components/Cliente/TabelaClientes";
 
-
 const Clientes = () => {
   return (
     <div>
