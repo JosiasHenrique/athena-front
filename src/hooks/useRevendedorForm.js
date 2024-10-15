@@ -37,7 +37,7 @@ const useRevendedorForm = (refreshRevendedores) => {
             }
             refreshRevendedores();
         } catch (error) {
-            toast.error("Erro ao salvar o revendedor.");
+            toast.error(error.message);
         } finally {
             setLoading(false);
             setModalOpen(false);

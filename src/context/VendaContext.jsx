@@ -18,25 +18,34 @@ export const VendaProvider = ({ children }) => {
     const [revendedor, setRevendedor] = useState(null);
     const [cliente, setCliente] = useState(null); 
 
-    // Função para atualizar a venda com uma nova chave e valor
     const atualizarVenda = (key, value) => {
         setVenda(prev => ({ ...prev, [key]: value }));
     };
 
-    // Função para adicionar um produto à lista de produtos da venda
     const adicionarProduto = (produto) => {
         setVenda(prev => ({ ...prev, produtos: [...prev.produtos, produto] }));
     };
 
-    // Função para definir o revendedor selecionado
     const definirRevendedor = (rev) => {
-        setRevendedor(rev); // Atualiza o revendedor selecionado
-        atualizarVenda('id_revendedor', rev.id); // Atualiza o ID do revendedor na venda
+        setRevendedor(rev);
+        atualizarVenda('id_revendedor', rev.id); 
     };
 
     const definirCliente = (rev) => {
         setCliente(rev); 
         atualizarVenda('id_cliente', rev.id); 
+    };
+
+    const resetVenda = () => {
+        setVenda({
+            tipo_pagamento: '',
+            data_venda: '',
+            id_revendedor: null,
+            id_cliente: null,
+            produtos: [],
+        }),
+        setCliente(null),
+        setRevendedor(null);
     };
 
     return (
@@ -47,7 +56,8 @@ export const VendaProvider = ({ children }) => {
             revendedor, 
             cliente,
             definirRevendedor,
-            definirCliente
+            definirCliente,
+            resetVenda
         }}>
             {children} 
         </VendaContext.Provider>

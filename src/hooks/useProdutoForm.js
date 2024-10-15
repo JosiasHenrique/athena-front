@@ -39,7 +39,7 @@ const useProdutoForm = (refreshProdutos) => {
             }
             refreshProdutos();
         } catch (error) {
-            toast.error("Erro ao salvar o produto.");
+            toast.error(error.message);
         } finally {
             setLoading(false);
             setModalOpen(false);

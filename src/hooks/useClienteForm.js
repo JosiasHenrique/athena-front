@@ -37,7 +37,7 @@ const useClienteForm = (refreshClientes) => {
             }
             refreshClientes();
         } catch (error) {
-            toast.error("Erro ao salvar o cliente.");
+            toast.error(error.message);
         } finally {
             setLoading(false);
             setModalOpen(false);

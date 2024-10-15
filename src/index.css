@@ -37,7 +37,6 @@ body {
 }
 
 .navbar-dash ul li {
-  margin: 0 30px;
   font-weight: 500;
   padding: 7px 15px;
   border-radius: 5px;
@@ -45,7 +44,16 @@ body {
 }
 
 .navbar-dash ul li:hover {
+  color: var(--primary-color);
   transform: scale(1.05);
+}
+
+.selected button, .selected a {
+  color: black;
+  font-weight: 500;
+  padding: 7px 15px;  
+  background-color: var(--primary-color);
+  border-radius: 5px;
 }
 
 .nav-utils {
@@ -53,7 +61,7 @@ body {
 }
 
 .nav-utils button{
-  margin: 0 10px;
+  margin: 5px 15px;
 }
 
 .icon-nav {

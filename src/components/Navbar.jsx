@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useState, useRef, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import '../styles/dashboard.css';
 import logo from '../assets/img/LOGO.svg';
 import { BellIcon, Cog6ToothIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
@@ -8,8 +8,10 @@ import { useAuth } from '../context/AuthContext';
 const Navbar = () => {
     const [menuAberto, setMenuAberto] = useState(false);
     const [menuConfigAberto, setMenuConfigAberto] = useState(false);
-    const { logout } = useAuth();
-    const location = useLocation(); 
+    const location = useLocation();
+    const { logout } = useAuth(); 
+    const navigate = useNavigate();
+    const menuRef = useRef();
 
     const toggleMenu = () => {
         setMenuAberto(prev => !prev);
@@ -19,92 +21,76 @@ const Navbar = () => {
         setMenuConfigAberto(prev => !prev);
     };
 
+    const isSelected = (path) => {
+        return location.pathname === path ? 'selected' : '';
+    };
+
+    const isCadastrosSelected = () => {
+        return location.pathname.startsWith("/cadastro-") ? 'selected' : '';
+    };
+
     const handleLogout = () => {
         logout();
         navigate('/login');
     };
 
-    const isActive = (path) => location.pathname === path;
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (menuAberto && menuRef.current && !menuRef.current.contains(event.target)) {
+                setMenuAberto(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [menuAberto]);
 
     return (
         <nav className='navbar-dash bg-athena'>
             <div className="logo">
                 <img src={logo} alt="logo-athena" />
             </div>
-            <ul className="flex space-x-4">
-                <li>
-                    <Link 
-                        to="/" 
-                        className={`${isActive('/') ? 'op-selected' : ''}`}
-                    >
-                        Dashboard
-                    </Link>
+            <ul className="flex space-x-4 items-center">
+                <li className={isSelected("/")}>
+                    <Link to="/">Dashboard</Link>
                 </li>
-                <li>
-                    <Link 
-                        to="/vendas" 
-                        className={`${isActive('/vendas') ? 'op-selected' : ''}`}
-                    >
-                        Vendas
-                    </Link>
+                <li className={isSelected("/vendas")}>
+                    <Link to="/vendas">Vendas</Link>
                 </li>
-                <li>
-                    <Link 
-                        to="/compras" 
-                        className={`${isActive('/compras') ? 'op-selected' : ''}`}
-                    >
-                        Compras
-                    </Link>
+                <li className={isSelected("/compras")}>
+                    <Link to="/compras">Compras</Link>
                 </li>
-                <li className="relative">
+                <li 
+                    className={`relative ${isCadastrosSelected()}`}
+                    ref={menuRef}
+                >
                     <button className="flex items-center" onClick={toggleMenu}>
                         Cadastros
                         <ChevronDownIcon className="ml-1 h-5 w-5" />
                     </button>
                     {menuAberto && (
-                        <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
+                        <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
                             <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                                <Link 
-                                    to="/clientes" 
-                                    className={`block px-4 py-2 text-sm ${
-                                        isActive('/clientes') ? 'op-selected-dropdown' : 'hover:bg-gray-200 hover:text-black'
-                                    }`}
-                                    role="menuitem"
-                                >
+                                <Link to="/cadastro-clientes" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" onClick={() => setMenuAberto(false)}>
                                     Cadastro de Clientes
                                 </Link>
-                                <Link 
-                                    to="/produtos" 
-                                    className={`block px-4 py-2 text-sm ${
-                                        isActive('/produtos') ? 'op-selected-dropdown' : 'hover:bg-gray-200 hover:text-black'
-                                    }`}
-                                    role="menuitem"
-                                >
+                                <Link to="/cadastro-produtos" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" onClick={() => setMenuAberto(false)}>
                                     Cadastro de Produtos
                                 </Link>
-                                <Link 
-                                    to="/revendedores" 
-                                    className={`block px-4 py-2 text-sm ${
-                                        isActive('/revendedores') ? 'op-selected-dropdown' : 'hover:bg-gray-200 hover:text-black'
-                                    }`}
-                                    role="menuitem"
-                                >
+                                <Link to="/cadastro-revendedores" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" onClick={() => setMenuAberto(false)}>
                                     Cadastro de Revendedores
                                 </Link>
                             </div>
                         </div>
                     )}
                 </li>
-                <li>
-                    <Link 
-                        to="/relatorios" 
-                        className={`${isActive('/relatorios') ? 'op-selected' : ''}`}
-                    >
-                        Relatórios
-                    </Link>
+                <li className={isSelected("/relatorios")}>
+                    <Link to="/relatorios">Relatórios</Link>
                 </li>
             </ul>
-            <div className="nav-utils">
+            <div className="nav-utils"> 
                 <button>
                     <BellIcon className="h-6 w-6 icon-nav" />
                 </button>
@@ -115,12 +101,7 @@ const Navbar = () => {
                     {menuConfigAberto && (
                         <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
                             <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                                <button 
-                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" 
-                                    onClick={handleLogout}
-                                >
-                                    Sair
-                                </button>
+                                <button onClick={handleLogout}>Sair</button>
                             </div>
                         </div>
                     )}

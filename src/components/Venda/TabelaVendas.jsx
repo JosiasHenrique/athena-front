@@ -1,11 +1,10 @@
-import { EyeIcon, PencilIcon, TrashIcon, PlusIcon } from '@heroicons/react/24/solid';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { fetchVendas, deleteVenda } from '../../api/apiVenda';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ModalDelete from '../ModalDelete';
 import ModalVenda from './ModalVenda';
-import { VendaProvider } from '../../context/VendaContext';
+import { EyeIcon, PencilIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/solid';
 
 const TabelaVendas = () => {
     const [data, setData] = useState([]);
@@ -13,6 +12,7 @@ const TabelaVendas = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalVendaOpen, setIsModalVendaOpen] = useState(false);
     const [selectedVendaId, setSelectedVendaId] = useState(null);
+    
 
     const loadVendas = async () => {
         const vendas = await fetchVendas();
@@ -34,6 +34,7 @@ const TabelaVendas = () => {
             }
         }
     };
+    
 
     useEffect(() => {
         loadVendas();
@@ -45,9 +46,6 @@ const TabelaVendas = () => {
     );
 
     return (
-        <VendaProvider>
-
-
             <div className="container-tabela">
                 <ToastContainer />
                 <div className="utils-tabela">
@@ -60,7 +58,7 @@ const TabelaVendas = () => {
 
                     <input
                         type="text"
-                        placeholder="Pesquisar venda por nome..."
+                        placeholder="Pesquisar venda por nome do cliente ou revendedor"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         className="input-search p-2 border rounded mb-4"
@@ -87,7 +85,7 @@ const TabelaVendas = () => {
                                     <td className="px-2 py-2 text-left text-sm text-gray-500">{item.cliente.nome}</td>
                                     <td className="px-2 py-2 text-left text-sm text-gray-500">{item.revendedor.nome}</td>
                                     <td className="px-2 py-2 text-center text-sm font-medium">
-                                        <div className="flex justify-center">
+                                    <div className="flex justify-center">
                                             <button className="btn-action text-gray-400 mr-2 px-2 py-2">
                                                 <EyeIcon className="h-5 w-5" />
                                             </button>
@@ -98,10 +96,7 @@ const TabelaVendas = () => {
                                                 <PencilIcon className="h-5 w-5" />
                                             </button>
                                             <button
-                                                onClick={() => {
-                                                    setSelectedVendaId(item.id);
-                                                    setIsModalOpen(true);
-                                                }}
+                                               
                                                 className="btn-action text-gray-400 px-2 py-2"
                                             >
                                                 <TrashIcon className="h-5 w-5" />
@@ -122,9 +117,9 @@ const TabelaVendas = () => {
                 <ModalVenda
                     isOpen={isModalVendaOpen}
                     onClose={() => setIsModalVendaOpen(false)}
+                    refreshVendas={loadVendas}
                 />
             </div>
-        </VendaProvider>
     );
 };
 
