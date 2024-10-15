@@ -19,9 +19,9 @@ export const addVenda = async (venda) => {
     }
 };
 
-export const updateVenda= async (id, revendedor) => {
+export const updateVenda= async (id, compra) => {
     try {
-        await api.patch(`/vendas/${id}`, revendedor);
+        await api.patch(`/vendas/${id}`, compra);
     } catch (error) {
         console.error("Erro ao atualizar a venda:", error);
         throw error;

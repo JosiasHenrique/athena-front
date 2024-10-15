@@ -8,6 +8,7 @@ export const useVenda = () => {
 
 export const VendaProvider = ({ children }) => {
     const [venda, setVenda] = useState({
+        id: null,
         tipo_pagamento: '', 
         data_venda: '',
         id_revendedor: null, 
@@ -31,13 +32,22 @@ export const VendaProvider = ({ children }) => {
         atualizarVenda('id_revendedor', rev.id); 
     };
 
-    const definirCliente = (rev) => {
-        setCliente(rev); 
-        atualizarVenda('id_cliente', rev.id); 
+    const definirCliente = (cli) => {
+        setCliente(cli); 
+        atualizarVenda('id_cliente', cli.id); 
     };
+
+    const removerProduto = (produtoId) => {
+        setVenda(prev => ({
+            ...prev,
+            produtos: prev.produtos.filter(produto => produto.id !== produtoId)
+        }));
+    };
+    
 
     const resetVenda = () => {
         setVenda({
+            id: null,
             tipo_pagamento: '',
             data_venda: '',
             id_revendedor: null,
@@ -57,6 +67,7 @@ export const VendaProvider = ({ children }) => {
             cliente,
             definirRevendedor,
             definirCliente,
+            removerProduto,
             resetVenda
         }}>
             {children} 

@@ -7,16 +7,17 @@ import SelectedProdutos from './SelectedProdutos';
 import { useVenda } from '../../context/VendaContext';
 import useVendaForm from '../../hooks/useVendaForm';
 
-const ModalVenda = ({ isOpen, onClose, refreshVendas }) => {
+const ModalVenda = ({ isOpen, onClose, refreshVendas, isEditing }) => {
     const { venda, atualizarVenda } = useVenda();
-    const { handleSave, loading } = useVendaForm(refreshVendas, onClose);
+    const { handleSave, loading } = useVendaForm(refreshVendas, onClose, isEditing);
 
     const isVendaCompleta = () => {
         return (
             venda.tipo_pagamento ||
             venda.data_venda ||
             venda.id_revendedor ||
-            venda.id_cliente 
+            venda.id_cliente ||
+            (venda.produtos && venda.produtos.length > 0)
             
         );
     };
@@ -27,7 +28,7 @@ const ModalVenda = ({ isOpen, onClose, refreshVendas }) => {
                 <div className="bg-white rounded-lg w-11/12 md:w-1/2 lg:w-1/3 max-h-[90vh] overflow-y-auto">
                     <div className="flex justify-between items-center mb-4 cabecalho-modal">
                         <h2 className="text-lg font-semibold text-black p-2">
-                            Inserir Nova Venda
+                        {isEditing ? 'Editar Venda' : 'Inserir Nova Venda'}
                         </h2>
                         <button onClick={onClose} className="text-black p-2">
                             <XMarkIcon className="h-6 w-6" aria-hidden="true" />
@@ -68,7 +69,7 @@ const ModalVenda = ({ isOpen, onClose, refreshVendas }) => {
                             disabled={loading}
                             className={`w-full ${loading ? 'bg-gray-400' : 'bg-blue-600'} text-white font-bold py-2 rounded-md hover:bg-blue-700`}
                         >
-                            {loading ? 'Registrando...' : 'Registrar Venda'}
+                            {loading ? 'Atualizando...' : (isEditing ? 'Atualizar Venda' : 'Registrar Venda')}
                         </button>
                     </div>
                 </div>

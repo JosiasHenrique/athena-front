@@ -2,7 +2,7 @@ import React from 'react';
 import { useVenda } from '../../context/VendaContext';
 
 const ResumoVenda = () => {
-    const { venda, revendedor, cliente } = useVenda();
+    const { venda, revendedor, cliente, removerProduto } = useVenda();
 
     return (
         <div className="p-4 bg-gray-100 rounded-lg shadow-md mt-4">
@@ -40,6 +40,11 @@ const ResumoVenda = () => {
                             <div className="mb-2">
                                 <span className="font-semibold">Valor Total:</span> R$ {produto.valor_total.toFixed(2)}
                             </div>
+                            <button 
+                                onClick={() => {removerProduto(produto.id)}}
+                            >
+                                Remover
+                            </button>
                         </div>
                     ))}
                 </div>
