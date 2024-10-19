@@ -9,7 +9,9 @@ const useVendaForm = (refreshVendas, onClose, isEditing) => {
 
     const handleSave = async (venda) => {
         if (!venda.tipo_pagamento || !venda.data_venda || !venda.id_revendedor || !venda.id_cliente || venda.produtos.length === 0) {
-            toast.error("Todos os campos são obrigatórios.");
+            toast.error("Todos os campos são obrigatórios.", {
+                theme: "colored"
+            });
             return;
         }
 
@@ -51,7 +53,9 @@ const useVendaForm = (refreshVendas, onClose, isEditing) => {
             onClose();
         } catch (error) {
             console.error('Erro ao salvar a venda:', error);
-            toast.error(error.message);
+            toast.error(error.message, {
+                theme: "colored"
+            });
         } finally {
             setLoading(false);
         }

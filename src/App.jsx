@@ -9,6 +9,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import Revendedores from "./pages/Revendedores";
 import Produtos from "./pages/Produtos";
 import Clientes from "./pages/Clientes";
+import Panos from "./pages/Panos";
 
 
 const App = () => {
@@ -26,6 +27,7 @@ const App = () => {
           <Route path="cadastro-produtos" element={<Produtos />} />
           <Route path="cadastro-clientes" element={<Clientes />} />
           <Route path="relatorios" element={<Relatorios />} />
+          <Route path="panos" element={<Panos />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro-login" element={<CadastroLogin />} />

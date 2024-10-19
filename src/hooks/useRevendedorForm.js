@@ -22,7 +22,9 @@ const useRevendedorForm = (refreshRevendedores) => {
 
     const handleSave = async (nome, contato, comissao) => {
         if (!nome || !contato || !comissao) {
-            toast.error("Todos os campos são obrigatórios.");
+            toast.error("Todos os campos são obrigatórios.", {
+                theme: "colored"
+            });
             return;
         }
 
@@ -37,7 +39,9 @@ const useRevendedorForm = (refreshRevendedores) => {
             }
             refreshRevendedores();
         } catch (error) {
-            toast.error(error.message);
+            toast.error(error.message, {
+                theme: "colored"
+            });
         } finally {
             setLoading(false);
             setModalOpen(false);

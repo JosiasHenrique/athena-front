@@ -42,6 +42,7 @@ const ResumoVenda = () => {
                             </div>
                             <button 
                                 onClick={() => {removerProduto(produto.id)}}
+                                className="w-full text-white rounded-md p-2 transition duration-200 ease-in-out bg-red-500 hover:bg-red-600"
                             >
                                 Remover
                             </button>

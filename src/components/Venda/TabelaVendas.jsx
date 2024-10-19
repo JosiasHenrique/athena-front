@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { fetchVendas, deleteVenda } from '../../api/apiVenda';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -15,7 +15,6 @@ const TabelaVendas = () => {
     const [selectedVendaId, setSelectedVendaId] = useState(null);
     const [isModalEditing, setIsModalEditing] = useState(false);
     const { atualizarVenda, definirCliente, definirRevendedor, resetVenda } = useVenda();
-
 
     const loadVendas = async () => {
         const vendas = await fetchVendas();
@@ -70,7 +69,7 @@ const TabelaVendas = () => {
             <ToastContainer />
             <div className="utils-tabela">
                 <button
-                    className="bg-athena text-white p-2 rounded mb-4"
+                    className="text-white rounded-md p-2 mb-4 hover:bg-pink-500 transition duration-200 ease-in-out bg-athena"
                     onClick={() => iniciarNovaVenda()}
                 >
                     <PlusIcon className="h-5 w-5 inline" /> Nova Venda
@@ -90,20 +89,20 @@ const TabelaVendas = () => {
                 <table className="table-auto border-separate border-spacing-y-3">
                     <thead>
                         <tr>
-                            <th className="px-2 py-2 text-left text-xs font-medium text-black uppercase tracking-wider">Data</th>
-                            <th className="px-2 py-2 text-left text-xs font-medium text-black uppercase tracking-wider">Pagamento</th>
-                            <th className="px-2 py-2 text-left text-xs font-medium text-black uppercase tracking-wider">Cliente</th>
-                            <th className="px-2 py-2 text-left text-xs font-medium text-black uppercase tracking-wider">Revendedor</th>
-                            <th className="px-2 py-2 text-center text-xs font-medium text-black uppercase tracking-wider">Ações</th>
+                            <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Data</th>
+                            <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Pagamento</th>
+                            <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Cliente</th>
+                            <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Revendedor</th>
+                            <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
                         {filteredData.map((item) => (
-                            <tr key={item.id} className="bg-white border border-gray-300 rounded-lg shadow-sm">
-                                <td className="px-2 py-2 text-left text-sm text-gray-900">{new Date(item.data_venda).toLocaleDateString('pt-BR')}</td>
-                                <td className="px-2 py-2 text-left text-sm text-gray-500">{item.tipo_pagamento}</td>
-                                <td className="px-2 py-2 text-left text-sm text-gray-500">{item.cliente.nome}</td>
-                                <td className="px-2 py-2 text-left text-sm text-gray-500">{item.revendedor.nome}</td>
+                            <tr key={item.id} className="tb-athena">
+                                <td className="px-2 py-2 text-center text-sm text-gray-900">{new Date(item.data_venda).toLocaleDateString('pt-BR')}</td>
+                                <td className="px-2 py-2 text-center text-sm text-gray-900">{item.tipo_pagamento}</td>
+                                <td className="px-2 py-2 text-center text-sm text-gray-900">{item.cliente.nome}</td>
+                                <td className="px-2 py-2 text-center text-sm text-gray-900">{item.revendedor.nome}</td>
                                 <td className="px-2 py-2 text-center text-sm font-medium">
                                     <div className="flex justify-center">
                                         <button className="btn-action text-gray-400 mr-2 px-2 py-2">

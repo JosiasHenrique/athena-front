@@ -22,7 +22,9 @@ const useClienteForm = (refreshClientes) => {
 
     const handleSave = async (nome, telefone, email) => {
         if (!nome || !telefone || !email) {
-            toast.error("Todos os campos são obrigatórios.");
+            toast.error("Todos os campos são obrigatórios.", {
+                theme: "colored"
+            });
             return;
         }
 
@@ -37,7 +39,9 @@ const useClienteForm = (refreshClientes) => {
             }
             refreshClientes();
         } catch (error) {
-            toast.error(error.message);
+            toast.error(error.message, {
+                theme: "colored"
+            });
         } finally {
             setLoading(false);
             setModalOpen(false);

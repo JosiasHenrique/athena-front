@@ -20,7 +20,9 @@ const CadastroLogin = () => {
 
     // Verifica se as senhas coincidem
     if (password !== confirmPassword) {
-      toast.error("As senhas não coincidem"); 
+      toast.error("As senhas não coincidem", {
+        theme: "colored"
+      }); 
       setLoading(false);
       return;
     }
@@ -37,7 +39,9 @@ const CadastroLogin = () => {
     } catch (error) {
       console.error('Cadastro falhou', error.response ? error.response.data : error.message);
       const errorMessage = error.response?.data?.message || 'Ocorreu um erro ao cadastrar. Tente novamente.';
-      toast.error(errorMessage);
+      toast.error(errorMessage, {
+        theme: "colored"
+      });
     } finally {
       setLoading(false); 
     }

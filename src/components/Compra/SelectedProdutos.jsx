@@ -63,12 +63,13 @@ const SelectedProdutos = () => {
     };
 
     return (
-        <div className="p-4 bg-white rounded-lg shadow-md">
+        <div className="p-4 my-2 bg-white rounded-lg shadow-md">
             <button
                 onClick={() => setListaVisible(!listaVisible)}
-                className="w-full bg-blue-500 text-white rounded-md p-2 mb-4 hover:bg-blue-600 transition duration-200 ease-in-out"
+                className={`w-full rounded-md p-2 mb-4 transition duration-200 ease-in-out 
+                    ${produtoSelecionado ? 'bg-green-500 text-white' : 'bg-athena text-white hover:bg-pink-500'}`}
             >
-                Selecionar Produto
+                {produtoSelecionado ? 'Produto Selecionado' : 'Selecionar Produto'}
             </button>
 
             {listaVisible && (
@@ -78,7 +79,7 @@ const SelectedProdutos = () => {
                         placeholder="Buscar produto..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full p-2 border border-gray-300 rounded-md"
+                        className="w-full p-2 border-2 rounded-md"
                     />
                 </div>
             )}
@@ -92,7 +93,7 @@ const SelectedProdutos = () => {
                                 <button
                                     key={produto.id}
                                     onClick={() => handleSelectProduto(produto)}
-                                    className="w-full flex justify-between items-center p-2 bg-white text-gray-800 rounded-md border border-gray-200 hover:bg-blue-100 transition duration-200 ease-in-out"
+                                    className="w-full flex justify-between items-center p-2 bg-white text-gray-800 rounded-md border border-gray-200 hover:bg-pink-100 transition duration-200 ease-in-out"
                                 >
                                     <span>{produto.nome}</span>
                                     <span className="text-sm">{produto.categoria}</span>
@@ -114,7 +115,7 @@ const SelectedProdutos = () => {
                         <input
                             type="text"
                             value={produtoSelecionado.nome || ''} 
-                            className="w-full p-2 border border-gray-300 rounded-md"
+                            className="w-full p-2 border-2 rounded-md"
                             disabled
                         />
                     </div>
@@ -124,7 +125,7 @@ const SelectedProdutos = () => {
                             type="number"
                             value={quantidade}
                             onChange={handleQuantidadeChange} 
-                            className="w-full p-2 border border-gray-300 rounded-md"
+                            className="w-full p-2 border-2 rounded-md"
                         />
                     </div>
                     <div className="mb-2">
@@ -133,7 +134,7 @@ const SelectedProdutos = () => {
                             type="number"
                             value={valorUnitario}
                             onChange={handleValorUnitarioChange}
-                            className="w-full p-2 border border-gray-300 rounded-md"
+                            className="w-full p-2 border-2 rounded-md"
                         />
                     </div>
                     <div className="mb-2">
@@ -141,14 +142,14 @@ const SelectedProdutos = () => {
                         <input
                             type="number"
                             value={valorTotal.toFixed(2)} 
-                            className="w-full p-2 border border-gray-300 rounded-md"
+                            className="w-full p-2 border-2 rounded-md"
                             disabled
                         />
                     </div>
 
                     <button
                         onClick={handleAdicionarProduto}
-                        className="w-full bg-green-500 text-white rounded-md p-2 hover:bg-green-600 transition duration-200 ease-in-out"
+                        className="w-full text-white rounded-md p-2 hover:bg-pink-500 transition duration-200 ease-in-out bg-athena"
                     >
                         Adicionar Produto
                     </button>

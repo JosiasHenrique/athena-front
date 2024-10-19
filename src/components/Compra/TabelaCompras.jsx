@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { fetchCompras, deleteCompra } from '../../api/apiCompra';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -71,7 +71,7 @@ const TabelaCompras = () => {
             <ToastContainer />
             <div className="utils-tabela">
                 <button
-                    className="bg-athena text-white p-2 rounded mb-4"
+                    className="text-white rounded-md p-2 mb-4 hover:bg-pink-500 transition duration-200 ease-in-out bg-athena"
                     onClick={ () => iniciarNovaCompra()}
                 >
                     <PlusIcon className="h-5 w-5 inline" /> Nova Compra
@@ -91,20 +91,20 @@ const TabelaCompras = () => {
                 <table className="table-auto border-separate border-spacing-y-3">
                     <thead>
                         <tr>
-                            <th className="px-2 py-2 text-left text-xs font-medium text-black uppercase tracking-wider">Data da Compra</th>
-                            <th className="px-2 py-2 text-left text-xs font-medium text-black uppercase tracking-wider">Número da Nota</th>
-                            <th className="px-2 py-2 text-left text-xs font-medium text-black uppercase tracking-wider">Fornecedor</th>
-                            <th className="px-2 py-2 text-left text-xs font-medium text-black uppercase tracking-wider">Total da Compra</th>
-                            <th className="px-2 py-2 text-center text-xs font-medium text-black uppercase tracking-wider">Ações</th>
+                            <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Data da Compra</th>
+                            <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Número da Nota</th>
+                            <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Fornecedor</th>
+                            <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Total da Compra</th>
+                            <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
                         {filteredData.map((item) => (
-                            <tr key={item.id} className="bg-white border border-gray-300 rounded-lg shadow-sm">
-                                <td className="px-2 py-2 text-left text-sm text-gray-900">{new Date(item.data_compra).toLocaleDateString('pt-BR')}</td>
-                                <td className="px-2 py-2 text-left text-sm text-gray-500">{item.numero_nota}</td>
-                                <td className="px-2 py-2 text-left text-sm text-gray-500">{item.fornecedor}</td>
-                                <td className="px-2 py-2 text-left text-sm text-gray-500">R$ {calcularTotalCompra(item.itens)}</td>
+                            <tr key={item.id} className='tb-athena'>
+                                <td className="px-2 py-2 text-center text-sm text-gray-900">{new Date(item.data_compra).toLocaleDateString('pt-BR')}</td>
+                                <td className="px-2 py-2 text-center text-sm text-gray-900">{item.numero_nota}</td>
+                                <td className="px-2 py-2 text-center text-sm text-gray-900">{item.fornecedor}</td>
+                                <td className="px-2 py-2 text-center text-sm text-gray-900">R$ {calcularTotalCompra(item.itens)}</td>
                                 <td className="px-2 py-2 text-center text-sm font-medium">
                                     <div className="flex justify-center">
                                         <button onClick={() => carregarCompraParaEdicao(item)}

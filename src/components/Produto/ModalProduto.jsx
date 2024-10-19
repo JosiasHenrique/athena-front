@@ -38,7 +38,7 @@ const ModalProduto = ({ isOpen, onClose, produto, isEditing, onSave, loading }) 
                         <h2 className="text-lg font-semibold  text-black p-2">
                             Cadastro/Edição Produto
                         </h2>
-                        <button onClick={onClose} className="text-black p-2">
+                        <button onClick={onClose} className="text-black p-2 hover:text-gray-200">
                             <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                         </button>
                     </div>
@@ -94,9 +94,9 @@ const ModalProduto = ({ isOpen, onClose, produto, isEditing, onSave, loading }) 
                             />
                         </div>
                     </div>
-                    <div className="flex justify-end">
-                        <button onClick={handleSave} className={`text-black bg-athena rounded px-4 py-2 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`} disabled={loading}>
-                            {loading ? 'Salvando...' : 'Salvar'}
+                    <div>
+                        <button onClick={handleSave} className={`w-full text-white rounded-md p-2 mb-4 hover:bg-pink-500 transition duration-200 ease-in-out bg-athena${loading ? 'opacity-50 cursor-not-allowed' : ''}`} disabled={loading}>
+                            {loading ? 'Salvando...' : 'Salvar Produto'}
                         </button>
                     </div>
                     </div>

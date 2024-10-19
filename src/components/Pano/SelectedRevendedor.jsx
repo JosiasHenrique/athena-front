@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { useVenda } from '../../context/VendaContext';
+import { useEffect, useState } from 'react';
+import { usePano } from '../../context/PanoContext';
 import { fetchRevendedores } from '../../api/apiRevendedor';
 
 const SelectedRevendedor = () => {
-    const { definirRevendedor, revendedor } = useVenda();
+    const { definirRevendedor, revendedor } = usePano();
     const [vendedores, setRevendedores] = useState([]);
     const [listaVisible, setListaVisible] = useState(false);
     const [searchTerm, setSearchTerm] = useState(''); 
@@ -27,7 +27,7 @@ const SelectedRevendedor = () => {
     );
 
     return (
-        <div className="p-4 my-2 bg-white rounded-lg shadow-md">
+        <div className="p-4 bg-white rounded-lg shadow-md">
             <button 
                 onClick={() => setListaVisible(!listaVisible)} 
                 className={`w-full rounded-md p-2 mb-4 transition duration-200 ease-in-out 
@@ -48,7 +48,7 @@ const SelectedRevendedor = () => {
             )}
             
             {listaVisible && (
-                <div className="p-4 my-2 bg-gray-50 rounded-lg shadow-md border border-gray-300">
+                <div className="p-4 bg-gray-50 rounded-lg shadow-md border border-gray-300">
                     <h2 className="text-lg font-bold mb-2">Revendedores Disponíveis</h2>
                     <div className="space-y-2">
                         {filteredRevendedores.length > 0 ? (

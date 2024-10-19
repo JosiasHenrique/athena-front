@@ -1,4 +1,5 @@
 import { XMarkIcon } from '@heroicons/react/24/solid';
+import { XCircleIcon } from '@heroicons/react/24/solid';
 import React, { useEffect, useState } from 'react';
 
 const ModalRevendedor = ({ isOpen, onClose, revendedor, isEditing, onSave, loading }) => {
@@ -32,7 +33,7 @@ const ModalRevendedor = ({ isOpen, onClose, revendedor, isEditing, onSave, loadi
                         <h2 className="text-lg font-semibold  text-black p-2">
                             Cadastro/Edição Revendedor
                         </h2>
-                        <button onClick={onClose} className="text-black p-2">
+                        <button onClick={onClose} className="text-black p-2 hover:text-gray-200">
                             <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                         </button>
                     </div>
@@ -68,8 +69,8 @@ const ModalRevendedor = ({ isOpen, onClose, revendedor, isEditing, onSave, loadi
                         />
                     </div>
                     <div className="flex justify-end">
-                        <button onClick={handleSave} className={`bg-athena text-black rounded px-4 py-2 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`} disabled={loading}>
-                            {loading ? 'Salvando...' : 'Salvar'}
+                        <button onClick={handleSave} className={`w-full text-white rounded-md p-2 mb-4 hover:bg-pink-500 transition duration-200 ease-in-out bg-athena ${loading ? 'opacity-50 cursor-not-allowed' : ''}`} disabled={loading}>
+                            {loading ? 'Salvando...' : 'Salvar Revendedor'}
                         </button>
                     </div>
                     </div>

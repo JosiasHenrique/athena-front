@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import ClipLoader from 'react-spinners/ClipLoader';
@@ -22,7 +22,9 @@ const Login = () => {
     } catch (error) {
       console.error('Login failed', error);
       const errorMessage = error.response?.data?.message || 'Erro ao fazer login. Verifique suas credenciais e tente novamente.';
-      toast.error(errorMessage);
+      toast.error(errorMessage, {
+        theme: "colored"
+      });
     } finally {
       setLoading(false);
     }

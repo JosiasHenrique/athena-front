@@ -24,7 +24,9 @@ const useProdutoForm = (refreshProdutos) => {
         console.log(`${nome}, ${descricao}, ${categoria}, ${tamanho}, ${estoque_atual}`)
 
         if (!nome || !descricao || !categoria || !tamanho || !estoque_atual) {
-            toast.error("Todos os campos são obrigatórios.");
+            toast.error("Todos os campos são obrigatórios.", {
+                theme: "colored"
+            });
             return;
         }
 
@@ -39,7 +41,9 @@ const useProdutoForm = (refreshProdutos) => {
             }
             refreshProdutos();
         } catch (error) {
-            toast.error(error.message);
+            toast.error(error.message, {
+                theme: "colored"
+            });
         } finally {
             setLoading(false);
             setModalOpen(false);

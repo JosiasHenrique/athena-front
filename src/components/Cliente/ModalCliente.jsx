@@ -32,7 +32,7 @@ const ModalCliente = ({ isOpen, onClose, cliente, isEditing, onSave, loading }) 
                         <h2 className="text-lg font-semibold text-black p-2">
                             Cadastro/Edição Cliente
                         </h2>
-                        <button onClick={onClose} className="text-black p-2">
+                        <button onClick={onClose} className="text-black p-2 hover:text-gray-200">
                             <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                         </button>
                     </div>
@@ -67,9 +67,9 @@ const ModalCliente = ({ isOpen, onClose, cliente, isEditing, onSave, loading }) 
                             required
                         />
                     </div>
-                    <div className="flex justify-end">
-                        <button onClick={handleSave} className={`bg-athena text-black rounded px-4 py-2 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`} disabled={loading}>
-                            {loading ? 'Salvando...' : 'Salvar'}
+                    <div>
+                        <button onClick={handleSave} className={`w-full text-white rounded-md p-2 mb-4 hover:bg-pink-500 transition duration-200 ease-in-out bg-athena${loading ? 'opacity-50 cursor-not-allowed' : ''}`} disabled={loading}>
+                            {loading ? 'Salvando...' : 'Salvar Cliente'}
                         </button>
                     </div>
                     </div>

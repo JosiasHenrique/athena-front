@@ -9,14 +9,15 @@ const useCompraForm = (refreshCompras, onClose, isEditing) => {
 
     const handleSave = async (compra) => {
         if (!compra.numero_nota || !compra.fornecedor || !compra.data_compra || compra.itens.length === 0) {
-            toast.error("Todos os campos são obrigatórios.");
+            toast.error("Todos os campos são obrigatórios.", {
+                theme: "colored"
+            });
             return;
         }
     
         setLoading(true); 
         try {
-            if (isEditing) {  
-                //ver questao de atualizar valor total que esta ficando null     
+            if (isEditing) {      
                 await updateCompra(compra.id, { 
                     numero_nota: compra.numero_nota,
                     fornecedor: compra.fornecedor,
@@ -25,6 +26,7 @@ const useCompraForm = (refreshCompras, onClose, isEditing) => {
                         id: item.id,
                         quantidade: item.quantidade,
                         valor_unitario: item.valor_unitario,
+                        valor_total: item.valor_total
                     })),
                 });
                 toast.success('Compra atualizada com sucesso!');
@@ -37,6 +39,7 @@ const useCompraForm = (refreshCompras, onClose, isEditing) => {
                         id: item.id,
                         quantidade: item.quantidade,
                         valor_unitario: item.valor_unitario,
+                        valor_total: item.valor_total
                     })),
                 });
                 toast.success('Compra registrada com sucesso!');
@@ -46,7 +49,9 @@ const useCompraForm = (refreshCompras, onClose, isEditing) => {
             onClose();
         } catch (error) {
             console.error('Erro ao salvar a compra:', error);
-            toast.error(error.message); 
+            toast.error(error.message, {
+                theme: "colored"
+            }); 
         } finally {
             setLoading(false);
         }

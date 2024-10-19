@@ -1,15 +1,15 @@
-import TabelaVendas from "../components/Venda/TabelaVendas";
-import { VendaProvider } from "../context/VendaContext";
+import TabelaPanos from "../components/Pano/TabelaPanos";
+import { PanoProvider } from "../context/PanoContext";
 
-const Vendas = () => {
+const Panos = () => {
   return (
     <div>
-      <h2 className="cadastro-titulo">Vendas</h2>
-      <VendaProvider>
-        <TabelaVendas />
-      </VendaProvider>
+      <h2 className="cadastro-titulo">Panos</h2>
+      <PanoProvider>
+        <TabelaPanos />
+      </PanoProvider>
     </div>
   )
 };
 
-export default Vendas;
+export default Panos;

@@ -3,7 +3,7 @@ import { useVenda } from '../../context/VendaContext';
 import { fetchClientes } from '../../api/apiCliente'; 
 
 const SelectedCliente = () => {
-    const { definirCliente } = useVenda(); 
+    const { definirCliente, cliente } = useVenda(); 
     const [clientes, setClientes] = useState([]);
     const [listaVisible, setListaVisible] = useState(false);
     const [searchTerm, setSearchTerm] = useState(''); 
@@ -26,13 +26,14 @@ const SelectedCliente = () => {
         cliente.nome.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    return (
-        <div className="p-4 bg-white rounded-lg shadow-md">
+    return (    
+        <div className="p-4 my-2 bg-white rounded-lg shadow-md">
             <button 
                 onClick={() => setListaVisible(!listaVisible)} 
-                className="w-full bg-blue-500 text-white rounded-md p-2 mb-4 hover:bg-blue-600 transition duration-200 ease-in-out"
+                className={`w-full rounded-md p-2 mb-4 transition duration-200 ease-in-out 
+                    ${cliente ? 'bg-green-500 text-white' : 'bg-athena text-white hover:bg-pink-500'}`}
             >
-                Selecionar Cliente
+                {cliente ? 'Cliente Selecionado' : 'Selecionar Cliente'}
             </button>
             {listaVisible && (
                 <div className="mb-4">
@@ -41,7 +42,7 @@ const SelectedCliente = () => {
                         placeholder="Buscar cliente..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full p-2 border border-gray-300 rounded-md"
+                        className="w-full p-2 border-2 rounded-md"
                     />
                 </div>
             )}
@@ -55,7 +56,7 @@ const SelectedCliente = () => {
                                 <button
                                     key={cliente.id}
                                     onClick={() => handleSelectCliente(cliente)}
-                                    className="w-full flex justify-between items-center p-2 bg-white text-gray-800 rounded-md border border-gray-200 hover:bg-blue-100 transition duration-200 ease-in-out"
+                                    className="w-full flex justify-between items-center p-2 bg-white text-gray-800 rounded-md border border-gray-200 hover:bg-pink-100 transition duration-200 ease-in-out"
                                 >
                                     <span>{cliente.nome}</span>
                                     <span className="text-sm">{cliente.id}</span>
