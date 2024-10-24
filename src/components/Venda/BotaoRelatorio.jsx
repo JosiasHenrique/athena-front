@@ -45,7 +45,7 @@ const BotaoRelatorioVendas = () => {
       </button>
 
 
-      {isModalOpen && finalizar modal (
+      {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-lg">
             <h2 className="text-xl font-bold mb-4">Selecione o Período</h2>
