@@ -4,7 +4,7 @@ import { PanoProvider } from "../context/PanoContext";
 const Panos = () => {
   return (
     <div>
-      <h2 className="cadastro-titulo">Panos</h2>
+      <h2 className="cadastro-titulo">Controle de Panos</h2>
       <PanoProvider>
         <TabelaPanos />
       </PanoProvider>

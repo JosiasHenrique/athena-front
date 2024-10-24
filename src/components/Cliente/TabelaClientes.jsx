@@ -82,7 +82,6 @@ const TabelaClientes = () => {
                             <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Nome</th>
                             <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Telefone</th>
                             <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Email</th>
-                            <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Id</th>
                             <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Ações</th>
                         </tr>
                     </thead>
@@ -92,7 +91,6 @@ const TabelaClientes = () => {
                                 <td className="px-2 py-2 text-center text-sm text-gray-900">{item.nome}</td>
                                 <td className="px-2 py-2 text-center text-sm text-gray-900">{item.telefone}</td>
                                 <td className="px-2 py-2 text-center text-sm text-gray-900">{item.email}</td>
-                                <td className="px-2 py-2 text-center text-sm text-gray-900">{item.id}</td>
                                 <td className="px-2 py-2 text-center text-sm font-medium">
                                     <div className="flex justify-center">
                                         <button className="btn-action text-gray-400 mr-2 px-2 py-2">

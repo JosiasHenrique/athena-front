@@ -80,7 +80,6 @@ const TabelaRevendedores = () => {
                         <th className="p-2 text-center text-xs font-large text-black uppercase tracking-wider">Nome</th>
                         <th className="p-2 text-center text-xs font-large text-black uppercase tracking-wider">Contato</th>
                         <th className="p-2 text-center text-xs font-large text-black uppercase tracking-wider">Comissão</th>
-                        <th className="p-2 text-center text-xs font-large text-black uppercase tracking-wider">Id</th>
                         <th className="p-2 text-center text-xs font-large text-black uppercase tracking-wider">Ações</th>
                     </tr>
                 </thead>
@@ -90,7 +89,6 @@ const TabelaRevendedores = () => {
                             <td className="p-2 text-center text-sm text-gray-900">{item.nome}</td>
                             <td className="p-2 text-center text-sm text-gray-500">{item.contato}</td>
                             <td className="p-2 text-center text-sm text-gray-500">{item.comissao}</td>
-                            <td className="p-2 text-center text-sm text-gray-500">{item.id}</td>
                             <td className="p-2 text-center text-sm font-medium">
                                 <div className="flex justify-center">
                                     <button className="btn-action text-gray-400 mr-2 px-2 py-2">

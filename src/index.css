@@ -133,15 +133,13 @@ input:focus {
   display: flex;
   width: 90%;
   margin-top: 20px;
+  justify-content: center;
 }
 
 .utils-tabela input {
-  width: 80%;
-}
-
-.utils-tabela button {
-  width: 20%;
-  margin-right: 20px;
+  margin: 0 10px;
+  width: 50%;
+  height: 40px;
 }
 
 .cabecalho-modal {
@@ -163,7 +161,7 @@ input:focus {
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: var(--quaternary-color);
+  background-color: var(--quinary-color);
   text-align: center;
-  padding: 20px 0;
+  padding: 15px 0;
 }

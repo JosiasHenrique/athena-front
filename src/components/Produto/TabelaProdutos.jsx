@@ -79,8 +79,7 @@ const TabelaProdutos = () => {
                             <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Descrição</th>
                             <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Categoria</th>
                             <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Tamanho</th>
-                            <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Estoque Atual</th>
-                            <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Id</th>
+                            <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Estoque</th>
                             <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Ações</th>
                         </tr>
                     </thead>
@@ -92,7 +91,6 @@ const TabelaProdutos = () => {
                                 <td className="px-2 py-2 text-center text-sm text-gray-900">{item.categoria}</td>
                                 <td className="px-2 py-2 text-center text-sm text-gray-900">{item.tamanho}</td>
                                 <td className="px-2 py-2 text-center text-sm text-gray-900">{item.estoque_atual}</td>
-                                <td className="px-2 py-2 text-center text-sm text-gray-900">{item.id}</td>
                                 <td className="px-2 py-2 text-center text-sm font-medium">
                                     <div className="flex justify-center">
                                         <button className="btn-action text-gray-400 mr-2 px-2 py-2">
