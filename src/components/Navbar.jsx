@@ -92,6 +92,9 @@ const Navbar = () => {
                 <li className={isSelected("/relatorios")}>
                     <Link to="/relatorios">Relatórios</Link>
                 </li>
+                <li className={isSelected("/movimentacoes")}>
+                    <Link to="/movimentacoes">Movimentações</Link>
+                </li>
             </ul>
             <div className="nav-utils"> 
                 <button>
