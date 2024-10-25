@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { gerarRelatorioVendas } from '../../api/apiVenda';
 import { toast } from 'react-toastify';
-import { ArrowDownTrayIcon } from '@heroicons/react/24/solid';
+import { ArrowDownTrayIcon, XMarkIcon } from '@heroicons/react/24/solid';
 
 const BotaoRelatorioVendas = () => {
   const [startDate, setStartDate] = useState('');
@@ -45,58 +45,61 @@ const BotaoRelatorioVendas = () => {
       </button>
 
 
-      {isModalOpen && (
+
+      <div className={`fixed inset-0 z-50 ${isModalOpen ? '' : 'hidden'}`}>
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h2 className="text-xl font-bold mb-4">Selecione o Período</h2>
- 
-            <div className="flex space-x-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Data de Início
-                </label>
-                <input
-                  type="date"
-                  value={startDate}
-                  onChange={(e) => setStartDate(e.target.value)}
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Data de Fim
-                </label>
-                <input
-                  type="date"
-                  value={endDate}
-                  onChange={(e) => setEndDate(e.target.value)}
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                />
-              </div>
+          <div className="bg-white rounded-lg   w-11/12 md:w-1/4">
+            <div className="flex justify-between items-center mb-4 cabecalho-modal">
+              <h2 className="text-lg font-semibold text-black p-2">Selecione o Período</h2>
+              <button onClick={closeModal} className="text-black p-2 hover:text-gray-200">
+                <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+              </button>
             </div>
+            <div className="content-modal">
+            <div className="flex flex-col items-center text-center">
+  <div className="w-full">
+    <label className="block text-sm font-medium text-gray-700 p-2 mt-2">
+      Data Inicial
+    </label>
+    <input
+      type="date"
+      value={startDate}
+      onChange={(e) => setStartDate(e.target.value)}
+      className="mt-1 w-80 border-2 rounded-md p-2" 
+    />
+  </div>
 
-            {errorMessage && (
-              <p className="text-red-500 text-sm mt-2">{errorMessage}</p>
-            )}
+  <div className="w-full mt-1">
+    <label className="block text-sm font-medium text-gray-700 p-2 mt-2">
+      Data Final
+    </label>
+    <input
+      type="date"
+      value={endDate}
+      onChange={(e) => setEndDate(e.target.value)}
+      className="mt-1 w-80 border-2 rounded-md p-2" 
+    />
+  </div>
+</div>
 
-            <div className="flex justify-end space-x-4 mt-4">
-              <button
-                onClick={closeModal}
-                className="px-4 py-2 bg-gray-400 text-white rounded-md hover:bg-gray-500"
-              >
-                Cancelar
-              </button>
-              <button
-                onClick={handleClick}
-                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-              >
-                Gerar Relatório
-              </button>
+
+
+              {errorMessage && (
+                <p className="text-red-500 text-sm mt-2">{errorMessage}</p>
+              )}
+
+              <div className="text-center">
+                <button
+                  onClick={handleClick}
+                  className={`text-white rounded-md p-2 px-5 mt-6 mb-2 hover:bg-pink-500 transition duration-200 ease-in-out bg-athena`}
+                >
+                  Gerar Relatório
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 };
