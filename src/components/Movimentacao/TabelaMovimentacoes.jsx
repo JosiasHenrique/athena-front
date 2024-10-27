@@ -3,14 +3,18 @@ import { fetchMovimentacoes, deleteMovimentacao } from '../../api/apiMovimentaca
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ModalDelete from '../ModalDelete';
-import { PencilIcon, TrashIcon } from '@heroicons/react/24/solid';
+import { PencilIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/solid';
+import ModalMovimentacao from './ModalMovimentacao';
+import { useMovimentacao } from '../../context/MovimentacaoContext';
 
 const TabelaMovimentacoes = () => {
     const [data, setData] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalMovOpen, setIsModalMovOpen] = useState(false);
     const [isModalEditing, setIsModalEditing] = useState(false);
     const [selectedMovimentacaoId, setSelectedMovimentacaoId] = useState(null);
+    const { atualizarMovimentacao, resetMovimentacao } = useMovimentacao();
 
     const loadMovimentacoes = async () => {
         const movimentacoes = await fetchMovimentacoes();
@@ -45,10 +49,34 @@ const TabelaMovimentacoes = () => {
         return itens.reduce((total, item) => total + item.quantidade, 0);
     };
 
+
+    const iniciarNovaMovimentacao = () => {
+        setIsModalEditing(false);
+        resetMovimentacao();
+        setIsModalMovOpen(true);
+    };
+
+    const carregarMovimentacaoParaEdicao = (item) => {
+        setIsModalEditing(true);
+        setIsModalMovOpen(true);
+        atualizarMovimentacao('id', item.id);
+        
+        atualizarMovimentacao('descricao', item.descricao);
+        atualizarMovimentacao('data_movimentacao', item.data_movimentacao);
+        atualizarMovimentacao('itens', item.itens);
+    };
+
+
     return (
         <div className="container-tabela">
             <ToastContainer />
             <div className="utils-tabela">
+                <button
+                    className="text-white rounded-md p-2 mb-4 hover:bg-pink-500 transition duration-200 ease-in-out bg-athena"
+                    onClick={() => iniciarNovaMovimentacao()}
+                >
+                    <PlusIcon className="h-5 w-5 inline" /> Nova Movimentação
+                </button>
                 <input
                     type="text"
                     placeholder="Pesquisar movimentação por descrição"
@@ -72,7 +100,7 @@ const TabelaMovimentacoes = () => {
                     <tbody>
                         {filteredData.map((item) => (
                             <tr key={item.id} className='tb-athena'>
-                                <td className="px-2 py-2 text-center text-sm text-gray-900">{new Date(item.data_movimentacao).toLocaleDateString('pt-BR')}</td>
+                                <td className="px-2 py-2 text-center text-sm text-gray-900">{item.data_movimentacao}</td>
                                 <td className="px-2 py-2 text-center text-sm text-gray-900">{item.descricao}</td>
                                 <td className="px-2 py-2 text-center text-sm text-gray-900">{calcularQuantidadeTotalItens(item.itens)}</td>
                                 <td className="px-2 py-2 text-center text-sm font-medium">
@@ -104,15 +132,14 @@ const TabelaMovimentacoes = () => {
                 onConfirm={confirmDelete}
                 item="movimentação"
             />
-            {/*
-            
+
              <ModalMovimentacao
-                isOpen={isModalEditing}
-                onClose={() => setIsModalEditing(false)}
+                isOpen={isModalMovOpen}
+                onClose={() => setIsModalMovOpen(false)}
                 refreshMovimentacoes={loadMovimentacoes}
+                isEditing={isModalEditing}
             />
 
-            */}
         </div>
     );
 };

@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { useCompra } from '../../context/CompraContext';
 import { fetchProdutos } from '../../api/apiProduto';
+import { useMovimentacao } from '../../context/MovimentacaoContext';
 
 const SelectedProdutos = () => {
-    const { adicionarItem } = useCompra(); 
+    const { adicionarItem } = useMovimentacao(); 
     const [produtos, setProdutos] = useState([]);
     const [listaVisible, setListaVisible] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [produtoSelecionado, setProdutoSelecionado] = useState(null);
     const [quantidade, setQuantidade] = useState(1); 
     const [valorUnitario, setValorUnitario] = useState(0); 
-    const [valorTotal, setValorTotal] = useState(0); 
+    const [valorTotal, setValorTotal] = useState(0);
+    const [tipoMovimentacao, setTipoMovimentacao] = useState('ENTRADA'); // Novo estado
 
     const loadProdutos = async () => {
         try {
@@ -42,6 +43,7 @@ const SelectedProdutos = () => {
             quantidade: quantidade,
             valor_unitario: valorUnitario,
             valor_total: valorTotal,
+            tipo_movimentacao: tipoMovimentacao, // Adicionando o tipo de movimentação
         };
         adicionarItem(produtoComDetalhes);
         setProdutoSelecionado(null);
@@ -145,6 +147,19 @@ const SelectedProdutos = () => {
                             className="w-full p-2 border-2 rounded-md"
                             disabled
                         />
+                    </div>
+
+                    {/* Novo campo para selecionar entre ENTRADA e SAÍDA */}
+                    <div className="mb-2">
+                        <label className="block text-sm">Tipo de Movimentação:</label>
+                        <select
+                            value={tipoMovimentacao}
+                            onChange={(e) => setTipoMovimentacao(e.target.value)}
+                            className="w-full p-2 border-2 rounded-md"
+                        >
+                            <option value="ENTRADA">ENTRADA</option>
+                            <option value="SAÍDA">SAÍDA</option>
+                        </select>
                     </div>
 
                     <button

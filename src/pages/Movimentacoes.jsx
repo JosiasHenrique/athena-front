@@ -1,10 +1,15 @@
 import TabelaMovimentacoes from "../components/Movimentacao/TabelaMovimentacoes";
+import { MovimentacaoProvider } from "../context/MovimentacaoContext";
 
 const Movimentacoes = () => {
+    console.log("Componente Movimentacoes montado");
+
     return (
         <div>
             <h2 className="cadastro-titulo">Controle de Movimentações</h2>
-            <TabelaMovimentacoes />
+            <MovimentacaoProvider>
+                <TabelaMovimentacoes />
+            </MovimentacaoProvider>
         </div>
     )
 };
