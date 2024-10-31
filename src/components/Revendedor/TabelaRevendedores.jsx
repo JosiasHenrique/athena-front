@@ -1,4 +1,4 @@
-import { EyeIcon, PencilIcon, TrashIcon, PlusIcon } from '@heroicons/react/24/solid';
+import { PencilIcon, TrashIcon, PlusIcon } from '@heroicons/react/24/solid';
 import { useEffect, useState } from 'react';
 import { fetchRevendedores, deleteRevendedor } from '../../api/apiRevendedor';
 import ModalRevendedor from './ModalRevendedor';
@@ -10,8 +10,8 @@ import ModalDelete from '../ModalDelete';
 const TabelaRevendedores = () => {
     const [data, setData] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
-    const [isModalOpen, setIsModalOpen] = useState(false); // Controle do modal de exclusão
-    const [selectedRevendedorId, setSelectedRevendedorId] = useState(null); // ID do revendedor a ser excluído
+    const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false); 
+    const [selectedRevendedorId, setSelectedRevendedorId] = useState(null);
 
     const loadRevendedores = async () => {
         const revendedores = await fetchRevendedores();
@@ -28,16 +28,14 @@ const TabelaRevendedores = () => {
                 console.error("Erro ao excluir o revendedor:", error);
                 toast.error("Erro ao excluir o revendedor."); 
             } finally {
-                setIsModalOpen(false); 
+                setIsModalDeleteOpen(false); 
                 setSelectedRevendedorId(null); 
             }
         }
     };
 
- 
-
     const {
-        isModalOpen: isEditModalOpen,
+        isModalOpen,
         setModalOpen,
         selectedRevendedor,
         isEditing,
@@ -88,12 +86,9 @@ const TabelaRevendedores = () => {
                         <tr key={item.id} className="tb-athena">
                             <td className="p-2 text-center text-sm text-gray-900">{item.nome}</td>
                             <td className="p-2 text-center text-sm text-gray-500">{item.contato}</td>
-                            <td className="p-2 text-center text-sm text-gray-500">{item.comissao}</td>
+                            <td className="p-2 text-center text-sm text-gray-500">{item.comissao}%</td>
                             <td className="p-2 text-center text-sm font-medium">
                                 <div className="flex justify-center">
-                                    <button className="btn-action text-gray-400 mr-2 px-2 py-2">
-                                        <EyeIcon className="h-5 w-5" />
-                                    </button>
                                     <button 
                                         className="btn-action text-gray-400 mr-2 px-2 py-2" 
                                         onClick={() => handleEditModalOpen(item)}
@@ -103,7 +98,7 @@ const TabelaRevendedores = () => {
                                     <button 
                                         onClick={() => {
                                             setSelectedRevendedorId(item.id);
-                                            setIsModalOpen(true);
+                                            setIsModalDeleteOpen(true);
                                         }} 
                                         className="btn-action text-gray-400 px-2 py-2"
                                     >
@@ -117,7 +112,7 @@ const TabelaRevendedores = () => {
             </table>
             )}
             <ModalRevendedor 
-                isOpen={isEditModalOpen} 
+                isOpen={isModalOpen} 
                 onClose={() => setModalOpen(false)} 
                 revendedor={selectedRevendedor} 
                 isEditing={isEditing} 
@@ -125,8 +120,8 @@ const TabelaRevendedores = () => {
                 loading={loading} 
             />
             <ModalDelete 
-                isOpen={isModalOpen} 
-                onClose={() => setIsModalOpen(false)} 
+                isOpen={isModalDeleteOpen} 
+                onClose={() => setIsModaDeleteOpen(false)} 
                 onConfirm={confirmDelete} 
                 item="revendedor"
             />

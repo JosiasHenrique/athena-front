@@ -21,14 +21,8 @@ const useRevendedorForm = (refreshRevendedores) => {
     };
 
     const handleSave = async (nome, contato, comissao) => {
-        if (!nome || !contato || !comissao) {
-            toast.error("Todos os campos são obrigatórios.", {
-                theme: "colored"
-            });
-            return;
-        }
-
         setLoading(true);
+
         try {
             if (isEditing) {
                 await updateRevendedor(selectedRevendedor.id, { nome, contato, comissao });
@@ -39,7 +33,7 @@ const useRevendedorForm = (refreshRevendedores) => {
             }
             refreshRevendedores();
         } catch (error) {
-            toast.error(error.message, {
+            toast.error(error.message || "Ocorreu um erro inesperado. Tente novamente.", {
                 theme: "colored"
             });
         } finally {

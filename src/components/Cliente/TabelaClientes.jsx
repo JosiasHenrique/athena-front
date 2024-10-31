@@ -1,4 +1,4 @@
-import { EyeIcon, PencilIcon, TrashIcon, PlusIcon } from '@heroicons/react/24/solid';
+import { PencilIcon, TrashIcon, PlusIcon } from '@heroicons/react/24/solid';
 import { useEffect, useState } from 'react';
 import { fetchClientes, deleteCliente } from '../../api/apiCliente';
 import ModalCliente from './ModalCliente';
@@ -93,9 +93,6 @@ const TabelaClientes = () => {
                                 <td className="px-2 py-2 text-center text-sm text-gray-900">{item.email}</td>
                                 <td className="px-2 py-2 text-center text-sm font-medium">
                                     <div className="flex justify-center">
-                                        <button className="btn-action text-gray-400 mr-2 px-2 py-2">
-                                            <EyeIcon className="h-5 w-5" />
-                                        </button>
                                         <button
                                             className="btn-action text-gray-400 mr-2 px-2 py-2"
                                             onClick={() => handleEditModalOpen(item)}
