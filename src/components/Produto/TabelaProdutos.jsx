@@ -1,4 +1,4 @@
-import { EyeIcon, PencilIcon, TrashIcon, PlusIcon } from '@heroicons/react/24/solid';
+import { PencilIcon, TrashIcon, PlusIcon } from '@heroicons/react/24/solid';
 import { useEffect, useState } from 'react';
 import { fetchProdutos, deleteProduto } from '../../api/apiProduto';
 import ModalProduto from './ModalProduto';
@@ -10,7 +10,7 @@ import ModalDelete from '../ModalDelete';
 const TabelaProdutos = () => {
     const [data, setData] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
     const [selectedProdutoId, setSelectedProdutoId] = useState(null);
 
     const loadProdutos = async () => {
@@ -28,14 +28,14 @@ const TabelaProdutos = () => {
                 console.error("Erro ao excluir o Produto:", error);
                 toast.error("Erro ao excluir o Produto.");
             } finally {
-                setIsModalOpen(false);
+                setIsModalDeleteOpen(false);
                 setSelectedProdutoId(null);
             }
         }
     };
 
     const {
-        isModalOpen: isEditModalOpen,
+        isModalOpen,
         setModalOpen,
         selectedProduto,
         isEditing,
@@ -90,12 +90,11 @@ const TabelaProdutos = () => {
                                 <td className="px-2 py-2 text-center text-sm text-gray-900">{item.descricao}</td>
                                 <td className="px-2 py-2 text-center text-sm text-gray-900">{item.categoria}</td>
                                 <td className="px-2 py-2 text-center text-sm text-gray-900">{item.tamanho}</td>
-                                <td className="px-2 py-2 text-center text-sm text-gray-900">{item.estoque_atual}</td>
+                                <td className={`px-2 py-2 text-center text-sm ${item.estoque_atual <= 5 ? 'text-red-600' : 'text-gray-900'}`}>
+                                    {item.estoque_atual}
+                                </td>
                                 <td className="px-2 py-2 text-center text-sm font-medium">
                                     <div className="flex justify-center">
-                                        <button className="btn-action text-gray-400 mr-2 px-2 py-2">
-                                            <EyeIcon className="h-5 w-5" />
-                                        </button>
                                         <button
                                             className="btn-action text-gray-400 mr-2 px-2 py-2"
                                             onClick={() => handleEditModalOpen(item)}
@@ -104,7 +103,7 @@ const TabelaProdutos = () => {
                                         </button>
                                         <button onClick={() => {
                                             setSelectedProdutoId(item.id);
-                                            setIsModalOpen(true);
+                                            setIsModalDeleteOpen(true);
                                         }} className="btn-action text-gray-400 px-2 py-2">
                                             <TrashIcon className="h-5 w-5" />
                                         </button>
@@ -116,7 +115,7 @@ const TabelaProdutos = () => {
                 </table>
             )}
             <ModalProduto
-                isOpen={isEditModalOpen}
+                isOpen={isModalOpen}
                 onClose={() => setModalOpen(false)}
                 produto={selectedProduto}
                 isEditing={isEditing}
@@ -124,8 +123,8 @@ const TabelaProdutos = () => {
                 loading={loading}
             />
             <ModalDelete
-                isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
+                isOpen={isModalDeleteOpen}
+                onClose={() => setIsModalDeleteOpen(false)}
                 onConfirm={confirmDelete}
                 item="produto"
             />

@@ -21,14 +21,6 @@ const useProdutoForm = (refreshProdutos) => {
     };
 
     const handleSave = async (nome, descricao, categoria, tamanho, estoque_atual) => {
-        console.log(`${nome}, ${descricao}, ${categoria}, ${tamanho}, ${estoque_atual}`)
-
-        if (!nome || !descricao || !categoria || !tamanho || !estoque_atual) {
-            toast.error("Todos os campos são obrigatórios.", {
-                theme: "colored"
-            });
-            return;
-        }
 
         setLoading(true);
         try {
@@ -41,7 +33,7 @@ const useProdutoForm = (refreshProdutos) => {
             }
             refreshProdutos();
         } catch (error) {
-            toast.error(error.message, {
+            toast.error(error.message || "Ocorreu um erro inesperado. Tente novamente.", {
                 theme: "colored"
             });
         } finally {
