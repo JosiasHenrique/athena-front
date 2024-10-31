@@ -1,23 +1,22 @@
-import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import ClipLoader from 'react-spinners/ClipLoader';
 import logo from '../assets/img/LOGO.svg';
 import { toast, ToastContainer } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css';
+import { useState } from 'react';
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
+  const { register, handleSubmit, formState: { errors } } = useForm();
   const { login } = useAuth();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (data) => {
     setLoading(true);
     try {
-      await login({ email, password });
+      await login({ email: data.email, password: data.password });
       navigate('/');
     } catch (error) {
       console.error('Login failed', error);
@@ -37,28 +36,34 @@ const Login = () => {
           <img src={logo} alt="Logo" className="h-16 w-16" />
         </div>
         <h2 className="text-center text-2xl font-bold text-gray-800 mb-6">Login</h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">
             <label htmlFor="email" className="block text-gray-600 font-bold mb-2">Usuário</label>
             <input
               type="email"
               id="email"
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2"
+              {...register("email", { 
+                required: "Email é obrigatório", 
+                pattern: {
+                  value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+                  message: "Email inválido"
+                }
+              })}
+              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${errors.email ? 'border-red-500' : ''}`}
               placeholder="Ex: usuario@email.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
             />
+            {errors.email && <span className="text-red-500">{errors.email.message}</span>}
           </div>
           <div className="mb-6">
             <label htmlFor="password" className="block text-gray-600 font-bold mb-2">Senha</label>
             <input
               type="password"
               id="password"
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2"
+              {...register("password", { required: "Senha é obrigatória" })}
+              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${errors.password ? 'border-red-500' : ''}`}
               placeholder="Digite sua senha"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
             />
+            {errors.password && <span className="text-red-500">{errors.password.message}</span>}
           </div>
           <button
             type="submit"

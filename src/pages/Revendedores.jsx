@@ -1,12 +1,18 @@
 import TabelaRevendedores from "../components/Revendedor/TabelaRevendedores";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 
 const Revendedores = () => {
   return (
-    <div>
+    <>
+      <Navbar />
+      <div>
         <h2 className="cadastro-titulo">Controle de Revendedores</h2>
         <TabelaRevendedores />
-    </div>
+      </div>
+      <Footer />
+    </>
   )
 };
 

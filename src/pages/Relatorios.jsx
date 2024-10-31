@@ -1,11 +1,16 @@
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 
 const Relatorios = () => {
   return (
-    <div>
-        <h1>Relatorios</h1>
-        
-    </div>
+    <>
+      <Navbar />
+      <div>
+        <h2 className="cadastro-titulo">Controle de Relatórios</h2>
+      </div>
+      <Footer />
+    </>
   )
 };
 

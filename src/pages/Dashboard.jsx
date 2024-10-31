@@ -1,17 +1,16 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const Dashboard = () => {
-
   return (
-    <main>
+    <>
       <Navbar />
-      <Outlet />
+      <div>
+        <h2 className="cadastro-titulo">Dashboard</h2>
+      </div>
       <Footer />
-    </main>
-  );
+    </>
+  )
 };
 
 export default Dashboard;

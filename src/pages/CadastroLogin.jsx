@@ -1,3 +1,4 @@
+import { useForm } from 'react-hook-form';
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/img/LOGO.svg";
@@ -7,34 +8,26 @@ import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 const CadastroLogin = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [loading, setLoading] = useState(false); 
+  const { register, handleSubmit, formState: { errors }, watch } = useForm();
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  
+  const password = watch("password");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (data) => {
     setLoading(true);
 
-    // Verifica se as senhas coincidem
-    if (password !== confirmPassword) {
-      toast.error("As senhas não coincidem", {
-        theme: "colored"
-      }); 
-      setLoading(false);
-      return;
-    }
-
     try {
-      const response = await api.post('/users', { name, email, password });
+      const response = await api.post('/users', { 
+        name: data.name, 
+        email: data.email, 
+        password: data.password 
+      });
       toast.success("Conta criada com sucesso!");
       
-      // Adiciona um delay antes de redirecionar
       setTimeout(() => {
         navigate('/login');
-      }, 3000);
+      }, 1000);
       
     } catch (error) {
       console.error('Cadastro falhou', error.response ? error.response.data : error.message);
@@ -54,30 +47,34 @@ const CadastroLogin = () => {
           <img src={logo} alt="Logo" className="h-16 w-16" />
         </div>
         <h2 className="text-center text-2xl font-bold text-gray-800 mb-4">Cadastro</h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">
             <label htmlFor="name" className="block text-gray-600 font-bold mb-2">Nome</label>
             <input
               type="text"
               id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2"
+              {...register("name", { required: "Nome é obrigatório" })}
+              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${errors.name ? 'border-red-500' : ''}`}
               placeholder="Digite seu nome"
-              required
             />
+            {errors.name && <span className="text-red-500">{errors.name.message}</span>}
           </div>
           <div className="mb-4">
             <label htmlFor="email" className="block text-gray-600 font-bold mb-2">Email</label>
             <input
               type="email"
               id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2"
+              {...register("email", {
+                required: "Email é obrigatório",
+                pattern: {
+                  value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+                  message: "Email inválido"
+                }
+              })}
+              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${errors.email ? 'border-red-500' : ''}`}
               placeholder="Ex: usuario@email.com"
-              required
             />
+            {errors.email && <span className="text-red-500">{errors.email.message}</span>}
           </div>
           <div className="flex mb-6 space-x-4">
             <div className="w-full">
@@ -85,29 +82,30 @@ const CadastroLogin = () => {
               <input
                 type="password"
                 id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2"
+                {...register("password", { required: "Senha é obrigatória" })}
+                className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${errors.password ? 'border-red-500' : ''}`}
                 placeholder="Digite sua senha"
-                required
               />
+              {errors.password && <span className="text-red-500">{errors.password.message}</span>}
             </div>
             <div className="w-full">
               <label htmlFor="confirm-password" className="block text-gray-600 font-bold mb-2">Confirmar Senha</label>
               <input
                 type="password"
                 id="confirm-password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2"
+                {...register("confirmPassword", {
+                  required: "Confirmação de senha é obrigatória",
+                  validate: value => value === password || "As senhas não coincidem"
+                })}
+                className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${errors.confirmPassword ? 'border-red-500' : ''}`}
                 placeholder="Confirmar senha"
-                required
               />
+              {errors.confirmPassword && <span className="text-red-500">{errors.confirmPassword.message}</span>}
             </div>
           </div>
           <button
             type="submit"
-            className="w-full font-bold py-2 px-4 rounded-lg text-gray-700"
+            className="w-full font-bold py-2 px-4 rounded-lg text-gray-700 bg-athena hover:bg-pink-500 transition duration-200 ease-in-out"
             disabled={loading}
           >
             {loading ? (
