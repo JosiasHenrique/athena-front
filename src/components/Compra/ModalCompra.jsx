@@ -3,7 +3,7 @@ import React from 'react';
 import ResumoCompra from './ResumoCompra';
 import { useCompra } from '../../context/CompraContext';
 import useCompraForm from '../../hooks/useCompraForm';
-import SelectedProdutos from '../Compra/SelectedProdutos';
+import SelectedProdutos from '../Compra/SelectProduto/SelectedProdutos';
 
 const ModalCompra = ({ isOpen, onClose, refreshCompras, isEditing }) => {
     const { compra, atualizarCompra } = useCompra();
