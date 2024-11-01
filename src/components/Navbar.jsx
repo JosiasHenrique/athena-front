@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import '../styles/dashboard.css';
+import '../styles/navbar.css';
 import logo from '../assets/img/LOGO.svg';
 import { BellIcon, Cog6ToothIcon, ChevronDownIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useAuth } from '../context/AuthContext';

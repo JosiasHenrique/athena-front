@@ -90,62 +90,64 @@ const TabelaVendas = () => {
             {filteredData.length === 0 ? (
                 <p className="text-gray-500 text-center">Nenhuma venda encontrada.</p>
             ) : (
-                <table className="table-auto border-separate border-spacing-y-3">
-                    <thead>
-                        <tr>
-                            <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Data</th>
-                            <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Pagamento</th>
-                            <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Cliente</th>
-                            <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Revendedor</th>
-                            <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Comissão(Rev)</th>
-                            <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Valor</th>
-                            <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {filteredData.map((item) => {
-                            const totalVenda = item.itens.reduce((acc, produto) => acc + produto.valor_total, 0);
-                            const totalComissao = item.itens.reduce((acc, produto) => acc + produto.valor_comissao, 0);
+                <div className="overflow-x-auto w-full">
+                    <table className="table-auto border-separate border-spacing-y-3 mx-auto">
+                        <thead>
+                            <tr>
+                                <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Data</th>
+                                <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Pagamento</th>
+                                <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Cliente</th>
+                                <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Revendedor</th>
+                                <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Comissão(Rev)</th>
+                                <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Valor</th>
+                                <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {filteredData.map((item) => {
+                                const totalVenda = item.itens.reduce((acc, produto) => acc + produto.valor_total, 0);
+                                const totalComissao = item.itens.reduce((acc, produto) => acc + produto.valor_comissao, 0);
 
-                            return (
-                                <tr key={item.id} className="tb-athena">
-                                    <td className="px-2 py-2 text-center text-sm text-gray-900">{new Date(item.data_venda).toLocaleDateString('pt-BR')}</td>
-                                    <td className="px-2 py-2 text-center text-sm text-gray-900">{item.tipo_pagamento}</td>
-                                    <td className="px-2 py-2 text-center text-sm text-gray-900">{item.cliente.nome}</td>
-                                    <td className="px-2 py-2 text-center text-sm text-gray-900">{item.revendedor.nome}</td>
-                                    <td className="px-2 py-2 text-center text-sm text-gray-900">
-                                        {totalComissao.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
-                                    </td>
-                                    <td className="px-2 py-2 text-center text-sm text-gray-900">
-                                        {totalVenda.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
-                                    </td>
-                                    <td className="px-2 py-2 text-center text-sm font-medium">
-                                        <div className="flex justify-center">
-                                            <button className="btn-action text-gray-400 mr-2 px-2 py-2">
-                                                <EyeIcon className="h-5 w-5" />
-                                            </button>
-                                            <button
-                                                className="btn-action text-gray-400 mr-2 px-2 py-2"
-                                                onClick={() => carregarVendaParaEdicao(item)}
-                                            >
-                                                <PencilIcon className="h-5 w-5" />
-                                            </button>
-                                            <button
-                                                onClick={() => {
-                                                    setIsModalOpen(true);
-                                                    setSelectedVendaId(item.id);
-                                                }}
-                                                className="btn-action text-gray-400 px-2 py-2"
-                                            >
-                                                <TrashIcon className="h-5 w-5" />
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            );
-                        })}
-                    </tbody>
-                </table>
+                                return (
+                                    <tr key={item.id} className="tb-athena">
+                                        <td className="px-2 py-2 text-center text-sm text-gray-900">{new Date(item.data_venda).toLocaleDateString('pt-BR')}</td>
+                                        <td className="px-2 py-2 text-center text-sm text-gray-900">{item.tipo_pagamento}</td>
+                                        <td className="px-2 py-2 text-center text-sm text-gray-900">{item.cliente.nome}</td>
+                                        <td className="px-2 py-2 text-center text-sm text-gray-900">{item.revendedor.nome}</td>
+                                        <td className="px-2 py-2 text-center text-sm text-gray-900">
+                                            {totalComissao.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                                        </td>
+                                        <td className="px-2 py-2 text-center text-sm text-gray-900">
+                                            {totalVenda.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                                        </td>
+                                        <td className="px-2 py-2 text-center text-sm font-medium">
+                                            <div className="flex justify-center">
+                                                <button className="btn-action text-gray-400 mr-2 px-2 py-2">
+                                                    <EyeIcon className="h-5 w-5" />
+                                                </button>
+                                                <button
+                                                    className="btn-action text-gray-400 mr-2 px-2 py-2"
+                                                    onClick={() => carregarVendaParaEdicao(item)}
+                                                >
+                                                    <PencilIcon className="h-5 w-5" />
+                                                </button>
+                                                <button
+                                                    onClick={() => {
+                                                        setIsModalOpen(true);
+                                                        setSelectedVendaId(item.id);
+                                                    }}
+                                                    className="btn-action text-gray-400 px-2 py-2"
+                                                >
+                                                    <TrashIcon className="h-5 w-5" />
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </table>
+                </div>
             )}
             <ModalDelete
                 isOpen={isModalOpen}

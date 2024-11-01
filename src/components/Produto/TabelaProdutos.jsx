@@ -72,47 +72,49 @@ const TabelaProdutos = () => {
             {filteredData.length === 0 ? (
                 <p className="text-gray-500 text-center">Nenhum produto encontrado.</p>
             ) : (
-                <table className="table-auto border-separate border-spacing-y-3">
-                    <thead>
-                        <tr>
-                            <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Nome</th>
-                            <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Descrição</th>
-                            <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Categoria</th>
-                            <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Tamanho</th>
-                            <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Estoque</th>
-                            <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {filteredData.map((item) => (
-                            <tr key={item.id} className='tb-athena'>
-                                <td className="px-2 py-2 text-center text-sm text-gray-900">{item.nome}</td>
-                                <td className="px-2 py-2 text-center text-sm text-gray-900">{item.descricao}</td>
-                                <td className="px-2 py-2 text-center text-sm text-gray-900">{item.categoria}</td>
-                                <td className="px-2 py-2 text-center text-sm text-gray-900">{item.tamanho}</td>
-                                <td className={`px-2 py-2 text-center text-sm ${item.estoque_atual <= 5 ? 'text-red-600' : 'text-gray-900'}`}>
-                                    {item.estoque_atual}
-                                </td>
-                                <td className="px-2 py-2 text-center text-sm font-medium">
-                                    <div className="flex justify-center">
-                                        <button
-                                            className="btn-action text-gray-400 mr-2 px-2 py-2"
-                                            onClick={() => handleEditModalOpen(item)}
-                                        >
-                                            <PencilIcon className="h-5 w-5" />
-                                        </button>
-                                        <button onClick={() => {
-                                            setSelectedProdutoId(item.id);
-                                            setIsModalDeleteOpen(true);
-                                        }} className="btn-action text-gray-400 px-2 py-2">
-                                            <TrashIcon className="h-5 w-5" />
-                                        </button>
-                                    </div>
-                                </td>
+                <div className="overflow-x-auto w-full">
+                    <table className="table-auto border-separate border-spacing-y-3 mx-auto">
+                        <thead>
+                            <tr>
+                                <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Nome</th>
+                                <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Descrição</th>
+                                <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Categoria</th>
+                                <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Tamanho</th>
+                                <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Estoque</th>
+                                <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Ações</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {filteredData.map((item) => (
+                                <tr key={item.id} className='tb-athena'>
+                                    <td className="px-2 py-2 text-center text-sm text-gray-900">{item.nome}</td>
+                                    <td className="px-2 py-2 text-center text-sm text-gray-900">{item.descricao}</td>
+                                    <td className="px-2 py-2 text-center text-sm text-gray-900">{item.categoria}</td>
+                                    <td className="px-2 py-2 text-center text-sm text-gray-900">{item.tamanho}</td>
+                                    <td className={`px-2 py-2 text-center text-sm ${item.estoque_atual <= 5 ? 'text-red-600' : 'text-gray-900'}`}>
+                                        {item.estoque_atual}
+                                    </td>
+                                    <td className="px-2 py-2 text-center text-sm font-medium">
+                                        <div className="flex justify-center">
+                                            <button
+                                                className="btn-action text-gray-400 mr-2 px-2 py-2"
+                                                onClick={() => handleEditModalOpen(item)}
+                                            >
+                                                <PencilIcon className="h-5 w-5" />
+                                            </button>
+                                            <button onClick={() => {
+                                                setSelectedProdutoId(item.id);
+                                                setIsModalDeleteOpen(true);
+                                            }} className="btn-action text-gray-400 px-2 py-2">
+                                                <TrashIcon className="h-5 w-5" />
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             )}
             <ModalProduto
                 isOpen={isModalOpen}

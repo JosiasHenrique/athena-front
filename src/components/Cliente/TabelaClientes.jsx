@@ -76,7 +76,8 @@ const TabelaClientes = () => {
             {filteredData.length === 0 ? (
                 <p className="text-gray-500 text-center">Nenhum cliente encontrado.</p>
             ) : (
-                <table className="table-auto border-separate border-spacing-y-3">
+                <div className="overflow-x-auto w-full">
+                <table className="table-auto border-separate border-spacing-y-3 mx-auto">
                     <thead>
                         <tr>
                             <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Nome</th>
@@ -111,6 +112,7 @@ const TabelaClientes = () => {
                         ))}
                     </tbody>
                 </table>
+                </div>
             )}
 
             <ModalCliente

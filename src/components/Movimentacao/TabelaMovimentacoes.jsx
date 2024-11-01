@@ -60,7 +60,7 @@ const TabelaMovimentacoes = () => {
         setIsModalEditing(true);
         setIsModalMovOpen(true);
         atualizarMovimentacao('id', item.id);
-        
+
         atualizarMovimentacao('descricao', item.descricao);
         atualizarMovimentacao('data_movimentacao', item.data_movimentacao);
         atualizarMovimentacao('itens', item.itens);
@@ -88,43 +88,45 @@ const TabelaMovimentacoes = () => {
             {filteredData.length === 0 ? (
                 <p className="text-gray-500 text-center">Nenhuma movimentação encontrada.</p>
             ) : (
-                <table className="table-auto border-separate border-spacing-y-3">
-                    <thead>
-                        <tr>
-                            <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Data da Movimentação</th>
-                            <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Descrição</th>
-                            <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Quantidade de Itens</th>
-                            <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {filteredData.map((item) => (
-                            <tr key={item.id} className='tb-athena'>
-                                <td className="px-2 py-2 text-center text-sm text-gray-900">{item.data_movimentacao}</td>
-                                <td className="px-2 py-2 text-center text-sm text-gray-900">{item.descricao}</td>
-                                <td className="px-2 py-2 text-center text-sm text-gray-900">{calcularQuantidadeTotalItens(item.itens)}</td>
-                                <td className="px-2 py-2 text-center text-sm font-medium">
-                                    <div className="flex justify-center">
-                                        <button onClick={() => carregarMovimentacaoParaEdicao(item)}
-                                            className="btn-action text-gray-400 mr-2 px-2 py-2"
-                                        >
-                                            <PencilIcon className="h-5 w-5" />
-                                        </button>
-                                        <button
-                                            className="btn-action text-gray-400 px-2 py-2"
-                                            onClick={() => {
-                                                setIsModalOpen(true);
-                                                setSelectedMovimentacaoId(item.id);
-                                            }}
-                                        >
-                                            <TrashIcon className="h-5 w-5" />
-                                        </button>
-                                    </div>
-                                </td>
+                <div className="overflow-x-auto w-full">
+                    <table className="table-auto border-separate border-spacing-y-3 mx-auto">
+                        <thead>
+                            <tr>
+                                <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Data da Movimentação</th>
+                                <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Descrição</th>
+                                <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Quantidade de Itens</th>
+                                <th className="px-2 py-2 text-center text-xs font-large text-black uppercase tracking-wider">Ações</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {filteredData.map((item) => (
+                                <tr key={item.id} className='tb-athena'>
+                                    <td className="px-2 py-2 text-center text-sm text-gray-900">{item.data_movimentacao}</td>
+                                    <td className="px-2 py-2 text-center text-sm text-gray-900">{item.descricao}</td>
+                                    <td className="px-2 py-2 text-center text-sm text-gray-900">{calcularQuantidadeTotalItens(item.itens)}</td>
+                                    <td className="px-2 py-2 text-center text-sm font-medium">
+                                        <div className="flex justify-center">
+                                            <button onClick={() => carregarMovimentacaoParaEdicao(item)}
+                                                className="btn-action text-gray-400 mr-2 px-2 py-2"
+                                            >
+                                                <PencilIcon className="h-5 w-5" />
+                                            </button>
+                                            <button
+                                                className="btn-action text-gray-400 px-2 py-2"
+                                                onClick={() => {
+                                                    setIsModalOpen(true);
+                                                    setSelectedMovimentacaoId(item.id);
+                                                }}
+                                            >
+                                                <TrashIcon className="h-5 w-5" />
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             )}
             <ModalDelete
                 isOpen={isModalOpen}
@@ -133,7 +135,7 @@ const TabelaMovimentacoes = () => {
                 item="movimentação"
             />
 
-             <ModalMovimentacao
+            <ModalMovimentacao
                 isOpen={isModalMovOpen}
                 onClose={() => setIsModalMovOpen(false)}
                 refreshMovimentacoes={loadMovimentacoes}
