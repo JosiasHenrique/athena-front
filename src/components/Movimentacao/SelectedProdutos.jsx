@@ -1,25 +1,20 @@
 import React, { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useMovimentacao } from '../../context/MovimentacaoContext'; 
 import { fetchProdutos } from '../../api/apiProduto';
-import { useMovimentacao } from '../../context/MovimentacaoContext';
 
 const SelectedProdutos = () => {
-    const { adicionarItem } = useMovimentacao(); 
+    const { adicionarItem } = useMovimentacao();
+    const { register, setValue, trigger, reset, watch, formState: { errors } } = useForm();
     const [produtos, setProdutos] = useState([]);
     const [listaVisible, setListaVisible] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [produtoSelecionado, setProdutoSelecionado] = useState(null);
-    const [quantidade, setQuantidade] = useState(1); 
-    const [valorUnitario, setValorUnitario] = useState(0); 
-    const [valorTotal, setValorTotal] = useState(0);
-    const [tipoMovimentacao, setTipoMovimentacao] = useState('ENTRADA'); // Novo estado
+    const [tipoMovimentacao, setTipoMovimentacao] = useState('ENTRADA');
 
     const loadProdutos = async () => {
-        try {
-            const produtosApi = await fetchProdutos();
-            setProdutos(produtosApi);
-        } catch (error) {
-            console.error('Erro ao carregar produtos:', error);
-        }
+        const produtosApi = await fetchProdutos();
+        setProdutos(produtosApi);
     };
 
     useEffect(() => {
@@ -27,25 +22,34 @@ const SelectedProdutos = () => {
     }, []);
 
     useEffect(() => {
-        const total = (quantidade || 1) * (valorUnitario || 0);
-        setValorTotal(parseFloat(total.toFixed(2)));
-    }, [quantidade, valorUnitario]);
+        if (produtoSelecionado) {
+            setValue('valorUnitario', produtoSelecionado.preco || '');
+            setValue('quantidade', '');
+        }
+    }, [produtoSelecionado, setValue]);
 
-    const handleSelectProduto = (produto) => {
-        setProdutoSelecionado(produto);
-        setValorUnitario(produto.preco || 0); 
-        setQuantidade(1);
-    };
+    watch(["quantidade", "valorUnitario"]);
 
-    const handleAdicionarProduto = () => {
+    const handleAdicionarProduto = async () => {
+        const isValid = await trigger();
+        if (!isValid) {
+            return;
+        }
+
+        const quantidade = watch("quantidade");
+        const valorUnitario = watch("valorUnitario");
+        const valorTotal = parseFloat((quantidade * valorUnitario).toFixed(2));
+
         const produtoComDetalhes = {
             ...produtoSelecionado,
-            quantidade: quantidade,
+            quantidade,
             valor_unitario: valorUnitario,
             valor_total: valorTotal,
-            tipo_movimentacao: tipoMovimentacao, // Adicionando o tipo de movimentação
+            tipo_movimentacao: tipoMovimentacao 
         };
+
         adicionarItem(produtoComDetalhes);
+        reset();
         setProdutoSelecionado(null);
         setListaVisible(false);
     };
@@ -53,16 +57,6 @@ const SelectedProdutos = () => {
     const filteredProdutos = produtos.filter((produto) =>
         produto.nome.toLowerCase().includes(searchTerm.toLowerCase())
     );
-
-    const handleQuantidadeChange = (e) => {
-        const value = Number(e.target.value);
-        setQuantidade(isNaN(value) || value <= 0 ? 1 : value);
-    };
-
-    const handleValorUnitarioChange = (e) => {
-        const value = Number(e.target.value);
-        setValorUnitario(isNaN(value) ? 0 : value);
-    };
 
     return (
         <div className="p-4 my-2 bg-white rounded-lg shadow-md">
@@ -94,11 +88,11 @@ const SelectedProdutos = () => {
                             filteredProdutos.map((produto) => (
                                 <button
                                     key={produto.id}
-                                    onClick={() => handleSelectProduto(produto)}
+                                    onClick={() => setProdutoSelecionado(produto)}
                                     className="w-full flex justify-between items-center p-2 bg-white text-gray-800 rounded-md border border-gray-200 hover:bg-pink-100 transition duration-200 ease-in-out"
                                 >
                                     <span>{produto.nome}</span>
-                                    <span className="text-sm">{produto.categoria}</span>
+                                    <span className="text-sm">{produto.preco}</span>
                                 </button>
                             ))
                         ) : (
@@ -116,40 +110,11 @@ const SelectedProdutos = () => {
                         <label className="block text-sm">Produto:</label>
                         <input
                             type="text"
-                            value={produtoSelecionado.nome || ''} 
+                            value={produtoSelecionado.nome || ''}
                             className="w-full p-2 border-2 rounded-md"
                             disabled
                         />
                     </div>
-                    <div className="mb-2">
-                        <label className="block text-sm">Quantidade:</label>
-                        <input
-                            type="number"
-                            value={quantidade}
-                            onChange={handleQuantidadeChange} 
-                            className="w-full p-2 border-2 rounded-md"
-                        />
-                    </div>
-                    <div className="mb-2">
-                        <label className="block text-sm">Valor Unitário:</label>
-                        <input
-                            type="number"
-                            value={valorUnitario}
-                            onChange={handleValorUnitarioChange}
-                            className="w-full p-2 border-2 rounded-md"
-                        />
-                    </div>
-                    <div className="mb-2">
-                        <label className="block text-sm">Valor Total:</label>
-                        <input
-                            type="number"
-                            value={valorTotal.toFixed(2)} 
-                            className="w-full p-2 border-2 rounded-md"
-                            disabled
-                        />
-                    </div>
-
-                    {/* Novo campo para selecionar entre ENTRADA e SAÍDA */}
                     <div className="mb-2">
                         <label className="block text-sm">Tipo de Movimentação:</label>
                         <select
@@ -161,10 +126,44 @@ const SelectedProdutos = () => {
                             <option value="SAÍDA">SAÍDA</option>
                         </select>
                     </div>
-
+                    <div className="mb-2">
+                        <label className="block text-sm">Quantidade:</label>
+                        <input
+                            type="number"
+                            {...register("quantidade", { required: "A quantidade é obrigatória.", min: { value: 1, message: "A quantidade deve ser pelo menos 1." } })}
+                            onChange={(e) => {
+                                setValue('quantidade', e.target.value);
+                                trigger("quantidade");
+                            }}
+                            className="w-full p-2 border-2 rounded-md"
+                        />
+                        {errors.quantidade && <p className="text-red-500">{errors.quantidade.message}</p>}
+                    </div>
+                    <div className="mb-2">
+                        <label className="block text-sm">Valor Unitário:</label>
+                        <input
+                            type="number"
+                            {...register("valorUnitario", { required: "O valor unitário é obrigatório.", min: { value: 0, message: "O valor unitário não pode ser menor que 0." } })}
+                            onChange={(e) => {
+                                setValue('valorUnitario', e.target.value);
+                                trigger("valorUnitario");
+                            }}
+                            className="w-full p-2 border-2 rounded-md"
+                        />
+                        {errors.valorUnitario && <p className="text-red-500">{errors.valorUnitario.message}</p>}
+                    </div>
+                    <div className="mb-2">
+                        <label className="block text-sm">Valor Total:</label>
+                        <input
+                            type="number"
+                            value={(watch("quantidade") * (watch("valorUnitario") || 0)).toFixed(2)}
+                            className="w-full p-2 border-2 rounded-md"
+                            disabled
+                        />
+                    </div>
                     <button
                         onClick={handleAdicionarProduto}
-                        className="w-full text-white rounded-md p-2 hover:bg-pink-500 transition duration-200 ease-in-out bg-athena"
+                        className="w-full bg-athena text-white rounded-md p-2 hover:bg-pink-500 transition duration-200 ease-in-out"
                     >
                         Adicionar Produto
                     </button>

@@ -32,7 +32,6 @@ const ModalMovimentacao = ({ isOpen, onClose, refreshMovimentacoes, isEditing })
                     </div>
 
                     <div className="p-4 max-h-[70vh] overflow-y-auto">
-                        {isMovimentacaoCompleta() && <ResumoMovimentacao />}
 
                         <div>
                             <label className="block text-sm font-medium text-gray-700 p-1">Descrição</label>
@@ -56,7 +55,7 @@ const ModalMovimentacao = ({ isOpen, onClose, refreshMovimentacoes, isEditing })
                         </div>
 
                         <SelectedProdutos />
-
+                        {isMovimentacaoCompleta() && <ResumoMovimentacao />}
                         <button
                             onClick={() => handleSave(movimentacao)}
                             disabled={loading}
