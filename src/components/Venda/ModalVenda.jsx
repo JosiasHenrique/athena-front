@@ -1,11 +1,12 @@
 import { XMarkIcon } from '@heroicons/react/24/solid';
 import React from 'react';
 import SelectedRevendedor from './SelectedRevendedor';
-import ResumoVenda from './ResumoVenda';
+
 import SelectedCliente from './SelectedCliente';
 import SelectedProdutos from './SelectedProdutos';
 import { useVenda } from '../../context/VendaContext';
 import useVendaForm from '../../hooks/useVendaForm';
+import ResumoVenda from './ResumoVenda';
 
 const ModalVenda = ({ isOpen, onClose, refreshVendas, isEditing }) => {
     const { venda, atualizarVenda } = useVenda();
@@ -36,8 +37,6 @@ const ModalVenda = ({ isOpen, onClose, refreshVendas, isEditing }) => {
                     </div>
 
                     <div className="p-4 max-h-[70vh] overflow-y-auto">
-                   
-                    {isVendaCompleta() && <ResumoVenda />}
                   
                         <div>
                             <label className="block text-sm font-medium text-gray-700 p-1 mt-2">Tipo de Pagamento</label>
@@ -63,7 +62,7 @@ const ModalVenda = ({ isOpen, onClose, refreshVendas, isEditing }) => {
                         <SelectedRevendedor />
                         <SelectedCliente />
                         <SelectedProdutos />
-
+                        {isVendaCompleta() && <ResumoVenda />}
                         <button
                             onClick={() => handleSave(venda)}
                             disabled={loading}

@@ -32,7 +32,6 @@ const ModalPano = ({ isOpen, onClose, refreshPanos, isEditing }) => {
                     </div>
 
                     <div className="p-4 max-h-[70vh] overflow-y-auto">
-                        {isPanoCompleto() && <ResumoPano />}
                         <div className="m-5">
                             <label className="block text-sm font-medium text-gray-700">Observações</label>
                             <input
@@ -45,6 +44,7 @@ const ModalPano = ({ isOpen, onClose, refreshPanos, isEditing }) => {
                         </div>
                         <SelectedRevendedor />
                         <SelectedProdutos />
+                        {isPanoCompleto() && <ResumoPano />}
                         <button
                             onClick={() => handleSave(pano)}
                             disabled={loading}

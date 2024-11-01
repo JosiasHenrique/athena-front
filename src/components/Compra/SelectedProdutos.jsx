@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useVenda } from '../../context/VendaContext';
+import { useCompra } from '../../context/CompraContext'; 
 import { fetchProdutos } from '../../api/apiProduto';
 
 const SelectedProdutos = () => {
-    const { adicionarProduto, revendedor } = useVenda();
+    const { adicionarItem } = useCompra();
     const { register, setValue, trigger, reset, watch, formState: { errors } } = useForm();
     const [produtos, setProdutos] = useState([]);
     const [listaVisible, setListaVisible] = useState(false);
@@ -31,24 +31,22 @@ const SelectedProdutos = () => {
 
     const handleAdicionarProduto = async () => {
         const isValid = await trigger();
-        if (!isValid || !revendedor) {
+        if (!isValid) {
             return;
         }
 
         const quantidade = watch("quantidade");
         const valorUnitario = watch("valorUnitario");
         const valorTotal = parseFloat((quantidade * valorUnitario).toFixed(2));
-        const comissaoCalculada = (valorTotal * revendedor.comissao) / 100;
 
         const produtoComDetalhes = {
             ...produtoSelecionado,
             quantidade,
             valor_unitario: valorUnitario,
-            valor_total: valorTotal,
-            valor_comissao: parseFloat(comissaoCalculada.toFixed(2))
+            valor_total: valorTotal
         };
 
-        adicionarProduto(produtoComDetalhes);
+        adicionarItem(produtoComDetalhes);
         reset();
         setProdutoSelecionado(null);
         setListaVisible(false);
@@ -105,9 +103,6 @@ const SelectedProdutos = () => {
             {produtoSelecionado && (
                 <div className="mt-4 p-4 bg-white rounded-lg shadow-md">
                     <h2 className="text-lg font-bold mb-2">Produto Selecionado</h2>
-                    {!revendedor && (
-                        <p className="text-red-500">Selecione um revendedor para fazer o cálculo da comissão.</p>
-                    )}
 
                     <div className="mb-2">
                         <label className="block text-sm">Produto:</label>
@@ -149,15 +144,6 @@ const SelectedProdutos = () => {
                         <input
                             type="number"
                             value={(watch("quantidade") * (watch("valorUnitario") || 0)).toFixed(2)} // Cálculo do valor total
-                            className="w-full p-2 border-2 rounded-md"
-                            disabled
-                        />
-                    </div>
-                    <div className="mb-2">
-                        <label className="block text-sm">Comissão do Revendedor:</label>
-                        <input
-                            type="number"
-                            value={revendedor?.comissao ? ((watch("quantidade") * (watch("valorUnitario") || 0)) * revendedor.comissao / 100).toFixed(2) : 0}
                             className="w-full p-2 border-2 rounded-md"
                             disabled
                         />

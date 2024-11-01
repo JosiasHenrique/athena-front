@@ -8,7 +8,7 @@ const ResumoPano = () => {
         <div className="p-4 bg-gray-100 rounded-lg shadow-md mt-4">
             <h2 className="text-2xl font-bold mb-4">Resumo do Pano</h2>
             <div className="mb-2">
-                <span className="font-semibold">Revendedor:</span> {revendedor ? revendedor.nome : ''}
+                <span className="font-semibold">Revendedor:</span> {revendedor ? revendedor.nome : 'Nenhum'}
             </div>
             <div className="mb-2">
                 <span className="font-semibold">Observações:</span> {pano.observacoes || 'Nenhuma'}
@@ -25,7 +25,7 @@ const ResumoPano = () => {
                                 <span className="font-semibold">Quantidade:</span> {item.quantidade}
                             </div>
                             <div className="mb-2">
-                                <span className="font-semibold">Valor de venda:</span> R$ {item.valor_venda.toFixed(2)}
+                                <span className="font-semibold">Valor de Venda:</span> R$ {parseFloat(item.valor_venda).toFixed(2)}
                             </div>
                             <button 
                                 onClick={() => { removerItem(item.id) }}

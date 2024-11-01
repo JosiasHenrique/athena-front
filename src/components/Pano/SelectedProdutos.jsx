@@ -1,42 +1,51 @@
 import React, { useEffect, useState } from 'react';
-import { usePano } from '../../context/PanoContext';
+import { useForm } from 'react-hook-form';
+import { usePano } from '../../context/PanoContext'; 
 import { fetchProdutos } from '../../api/apiProduto';
 
 const SelectedProdutos = () => {
-    const { adicionarItem } = usePano(); 
+    const { adicionarItem } = usePano();
+    const { register, setValue, trigger, reset, watch, formState: { errors } } = useForm();
     const [produtos, setProdutos] = useState([]);
     const [listaVisible, setListaVisible] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [produtoSelecionado, setProdutoSelecionado] = useState(null);
-    const [quantidade, setQuantidade] = useState(1); 
-    const [valorVenda, setValorVenda] = useState(0); 
 
     const loadProdutos = async () => {
-        try {
-            const produtosApi = await fetchProdutos();
-            setProdutos(produtosApi);
-        } catch (error) {
-            console.error('Erro ao carregar produtos:', error);
-        }
+        const produtosApi = await fetchProdutos();
+        setProdutos(produtosApi);
     };
 
     useEffect(() => {
         loadProdutos();
     }, []);
 
-    const handleSelectProduto = (produto) => {
-        setProdutoSelecionado(produto);
-        setQuantidade(1);
-        setValorVenda(produto.valorVenda);
-    };
+    useEffect(() => {
+        if (produtoSelecionado) {
+            setValue('quantidade', '');
+            setValue('valorVenda', ''); 
+        }
+    }, [produtoSelecionado, setValue]);
 
-    const handleAdicionarProduto = () => {
+    watch(["quantidade", "valorVenda"]);
+
+    const handleAdicionarProduto = async () => {
+        const isValid = await trigger();
+        if (!isValid) {
+            return;
+        }
+
+        const quantidade = watch("quantidade");
+        const valorVenda = watch("valorVenda");
+
         const produtoComDetalhes = {
             ...produtoSelecionado,
-            quantidade: quantidade,
+            quantidade,
             valor_venda: valorVenda,
         };
+
         adicionarItem(produtoComDetalhes);
+        reset();
         setProdutoSelecionado(null);
         setListaVisible(false);
     };
@@ -44,11 +53,6 @@ const SelectedProdutos = () => {
     const filteredProdutos = produtos.filter((produto) =>
         produto.nome.toLowerCase().includes(searchTerm.toLowerCase())
     );
-
-    const handleQuantidadeChange = (e) => {
-        const value = Number(e.target.value);
-        setQuantidade(isNaN(value) || value <= 0 ? 1 : value);
-    };
 
     return (
         <div className="p-4 my-2 bg-white rounded-lg shadow-md">
@@ -80,11 +84,11 @@ const SelectedProdutos = () => {
                             filteredProdutos.map((produto) => (
                                 <button
                                     key={produto.id}
-                                    onClick={() => handleSelectProduto(produto)}
+                                    onClick={() => setProdutoSelecionado(produto)}
                                     className="w-full flex justify-between items-center p-2 bg-white text-gray-800 rounded-md border border-gray-200 hover:bg-pink-100 transition duration-200 ease-in-out"
                                 >
                                     <span>{produto.nome}</span>
-                                    <span className="text-sm">{produto.categoria}</span>
+                                    <span className="text-sm">{produto.preco}</span>
                                 </button>
                             ))
                         ) : (
@@ -102,8 +106,8 @@ const SelectedProdutos = () => {
                         <label className="block text-sm">Produto:</label>
                         <input
                             type="text"
-                            value={produtoSelecionado.nome || ''} 
-                            className="w-full p-2 border-2  rounded-md"
+                            value={produtoSelecionado.nome || ''}
+                            className="w-full p-2 border-2 rounded-md"
                             disabled
                         />
                     </div>
@@ -111,22 +115,28 @@ const SelectedProdutos = () => {
                         <label className="block text-sm">Quantidade:</label>
                         <input
                             type="number"
-                            value={quantidade}
-                            onChange={handleQuantidadeChange} 
+                            {...register("quantidade", { required: "A quantidade é obrigatória.", min: { value: 1, message: "A quantidade deve ser pelo menos 1." } })}
+                            onChange={(e) => {
+                                setValue('quantidade', e.target.value);
+                                trigger("quantidade");
+                            }}
                             className="w-full p-2 border-2 rounded-md"
                         />
+                        {errors.quantidade && <p className="text-red-500">{errors.quantidade.message}</p>}
                     </div>
-
                     <div className="mb-2">
-                        <label className="block text-sm">Valor de venda:</label>
+                        <label className="block text-sm">Valor de Venda:</label>
                         <input
                             type="number"
-                            value={valorVenda} 
-                            onChange={(e) => setValorVenda(Number(e.target.value))}
+                            {...register("valorVenda", { required: "O valor de venda é obrigatório.", min: { value: 0, message: "O valor de venda não pode ser menor que 0." } })}
+                            onChange={(e) => {
+                                setValue('valorVenda', e.target.value);
+                                trigger("valorVenda");
+                            }}
                             className="w-full p-2 border-2 rounded-md"
                         />
+                        {errors.valorVenda && <p className="text-red-500">{errors.valorVenda.message}</p>}
                     </div>
-
                     <button
                         onClick={handleAdicionarProduto}
                         className="w-full bg-athena text-white rounded-md p-2 hover:bg-pink-500 transition duration-200 ease-in-out"

@@ -3,7 +3,7 @@ import React from 'react';
 import ResumoCompra from './ResumoCompra';
 import { useCompra } from '../../context/CompraContext';
 import useCompraForm from '../../hooks/useCompraForm';
-import SelectedProdutos from '../Compra/SelectProduto/SelectedProdutos';
+import SelectedProdutos from '../Compra/SelectedProdutos';
 
 const ModalCompra = ({ isOpen, onClose, refreshCompras, isEditing }) => {
     const { compra, atualizarCompra } = useCompra();
@@ -32,8 +32,6 @@ const ModalCompra = ({ isOpen, onClose, refreshCompras, isEditing }) => {
                     </div>
 
                     <div className="p-4 max-h-[70vh] overflow-y-auto">
-                        {isCompraCompleta() && <ResumoCompra />}
-
                         <div>
                             <label className="block text-sm font-medium text-gray-700 p-1 mt-2">Número da Nota</label>
                             <input
@@ -67,7 +65,7 @@ const ModalCompra = ({ isOpen, onClose, refreshCompras, isEditing }) => {
                         </div>
 
                         <SelectedProdutos />
-
+                        {isCompraCompleta() && <ResumoCompra />}
                         <button
                             onClick={() => handleSave(compra)}
                             disabled={loading}
