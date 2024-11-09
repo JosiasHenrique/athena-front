@@ -34,10 +34,6 @@ Você pode acessar a versão em produção do projeto através do link abaixo:
 O objetivo deste projeto é fornecer uma **solução de gestão completa** para pequenas e médias empresas do setor de **jóias em prata**. O sistema permite que a **Athena** acompanhe seu estoque, registre vendas de forma eficiente e gere relatórios detalhados para tomada de decisões.
 
 
-## 📝 Licença
-
-Este projeto está licenciado sob a [MIT License](LICENSE).
-
 ## 💬 Contato
 
 Caso tenha alguma dúvida ou sugestão, fique à vontade para me contatar:
